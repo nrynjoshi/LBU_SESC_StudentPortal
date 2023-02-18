@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 import java.util.Random;
 
 @SpringBootApplication
-public class StudentportalApplication  { 
+public class StudentportalApplication  {
 
 	public static void main(String[] args) {
 		SpringApplication.run(StudentportalApplication.class, args);

@@ -25,7 +25,7 @@ public class StudentPortalInitializer {
     }
 
     private void loadCourse() {
-       List<Course> courseList = courseServiceIfc.findCourse();
+       List<Course> courseList = courseServiceIfc.findAllCourse();
        if(courseList.isEmpty()){
            Course cloudComputingCourse= new Course("Cloud Computing Development", "Software engineering course", "John", "JG001", LectureTypeEnum.PHYSICAL,"9:00 am", "10:00 am", "COMP637");
            this.courseServiceIfc.createCourse(cloudComputingCourse);

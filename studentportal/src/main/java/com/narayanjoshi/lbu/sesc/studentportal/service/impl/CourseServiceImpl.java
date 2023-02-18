@@ -24,9 +24,11 @@ public class CourseServiceImpl implements CourseServiceIfc {
     }
 
     @Override
-    public List<Course> findCourse(){
+    public List<Course> findAllCourse(){
        return courseRepositoryIfc.findAll();
     }
+
+
 
 
 }

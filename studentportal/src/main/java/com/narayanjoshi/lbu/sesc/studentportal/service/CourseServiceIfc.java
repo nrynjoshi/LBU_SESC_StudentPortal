@@ -7,5 +7,7 @@ import java.util.List;
 public interface CourseServiceIfc {
     void createCourse(Course course);
 
-    List<Course> findCourse();
+    List<Course> findAllCourse();
+
+
 }
