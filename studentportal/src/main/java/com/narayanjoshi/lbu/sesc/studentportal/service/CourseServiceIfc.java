@@ -9,5 +9,7 @@ public interface CourseServiceIfc {
 
     List<Course> findAllCourse();
 
+    List<Course> searchCourses(String name);
+
 
 }

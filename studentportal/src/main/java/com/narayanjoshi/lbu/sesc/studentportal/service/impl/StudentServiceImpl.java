@@ -8,4 +8,17 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 public class StudentServiceImpl implements StudentServiceIfc {
+
+    public void createStudent(){
+
+    }
+
+    public void updateStudent(){
+
+    }
+
+    public void getGraduation(){
+
+    }
+
 }
