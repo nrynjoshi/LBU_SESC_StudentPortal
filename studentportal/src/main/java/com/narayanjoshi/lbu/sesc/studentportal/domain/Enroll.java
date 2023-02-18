@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Getter
@@ -24,6 +22,7 @@ public class Enroll  extends Common{
     @Column(name = "course_id")
     private String courseId;
     @Column(name = "intake")
+    @Enumerated(EnumType.STRING)
     private IntakeEnum intake;
     @Column(name = "date")
     private Timestamp date;

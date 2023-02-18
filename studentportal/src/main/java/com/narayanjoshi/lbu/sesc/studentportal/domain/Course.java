@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -31,6 +29,7 @@ public class Course extends Common{
     private String lectureRoom;
 
     @Column(name = "lecture_type")
+    @Enumerated(EnumType.STRING)
     private LectureTypeEnum lectureType;
 
     @Column(name = "starttime")
@@ -40,7 +39,7 @@ public class Course extends Common{
     private String endTime;
 
     @Column(name = "course_id")
-    private long courseId;
+    private String courseId;
 
 
 

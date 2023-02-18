@@ -5,9 +5,11 @@ import com.narayanjoshi.lbu.sesc.studentportal.domain.Course;
 import com.narayanjoshi.lbu.sesc.studentportal.service.CourseServiceIfc;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class CourseServiceImpl implements CourseServiceIfc {
 
     private CourseRepositoryIfc courseRepositoryIfc;
@@ -16,10 +18,12 @@ public class CourseServiceImpl implements CourseServiceIfc {
         this.courseRepositoryIfc = courseRepositoryIfc;
     }
 
+    @Override
     public void createCourse(Course course){
         courseRepositoryIfc.save(course);
     }
 
+    @Override
     public List<Course> findCourse(){
        return courseRepositoryIfc.findAll();
     }

@@ -12,23 +12,11 @@ import org.springframework.context.annotation.ComponentScan;
 
 import java.util.Random;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
-public class StudentportalApplication  { //implements CommandLineRunner
+@SpringBootApplication
+public class StudentportalApplication  { 
 
 	public static void main(String[] args) {
 		SpringApplication.run(StudentportalApplication.class, args);
 	}
 
-//	@Override
-//	public void run(String... args) throws Exception {
-//		Course course= new Course();
-//		course.setCourseId("");
-//		course.setDescription();
-//		course.setLecture();
-//		course.setName();
-//		course.setLectureType();
-//		course.setStartTime();
-//		course.setEndTime();
-//		course.setLectureRoom();
-//	}
 }
