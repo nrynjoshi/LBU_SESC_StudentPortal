@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -18,13 +20,13 @@ import java.sql.Timestamp;
 public class Enroll  extends Common{
 
     @Column(name = "student_id")
-    private String studentId;
+    private long studentId;
     @Column(name = "course_id")
     private String courseId;
     @Column(name = "intake")
     @Enumerated(EnumType.STRING)
     private IntakeEnum intake;
     @Column(name = "date")
-    private Timestamp date;
+    private LocalDateTime date;
 
 }
