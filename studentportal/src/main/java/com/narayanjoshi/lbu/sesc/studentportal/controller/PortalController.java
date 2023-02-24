@@ -67,7 +67,7 @@ public class PortalController {
     @GetMapping({ "/profile"})
     public String profilePortalPage(Model model) {
         model.addAttribute("student", new Student());
-        return "/login";
+        return "/view_and_update-student-profile";
     }
 
     @PostMapping({ "/profile"})
