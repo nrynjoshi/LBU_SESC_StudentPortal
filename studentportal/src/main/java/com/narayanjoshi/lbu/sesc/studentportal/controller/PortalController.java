@@ -30,6 +30,7 @@ public class PortalController {
     @PostMapping({ "/login"})
     public String loginPortalSubmit(@ModelAttribute Student student, RedirectAttributes redirectAttributes) {
         System.out.println(student.getEmail());
+        System.out.println(student.getPassword());
         return "redirect:/dashboard";
     }
 
