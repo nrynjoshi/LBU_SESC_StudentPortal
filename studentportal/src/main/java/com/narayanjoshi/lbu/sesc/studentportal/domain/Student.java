@@ -17,8 +17,8 @@ import javax.persistence.Table;
 @Table(name = "student")
 public class Student  extends Common{
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "fullname")
+    private String fullname;
 
     @Column(name = "dob")
     private String dob;
@@ -31,6 +31,9 @@ public class Student  extends Common{
 
     @Column(name = "email_address")
     private String email;
+
+    @Column(name = "password")
+    private String password;
 
     @Column(name = "student_id")
     private String studentId;

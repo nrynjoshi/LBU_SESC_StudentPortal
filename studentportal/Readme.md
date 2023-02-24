@@ -1,5 +1,1 @@
-- is there any security implementation is need if yes then what sort of security.
-- can we work on student portal only or other two also i.e. library and invoice
-- Do we need DTO for accepting json request and convert to entity
-- do we need any ui for this? if yes then is that a separate or integrated in this project.
-- 
+- is there any security implementation needed if yes then what sort of security.
