@@ -15,6 +15,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MissingRequestCookieException.class)
     public void missingRequestCookie(MissingRequestCookieException exception, HttpServletResponse response, RedirectAttributes redirectAttributes) throws IOException {
+        exception.printStackTrace();
         String redirectPath = "/";
         if(StringUtils.equals(exception.getCookieName(),"studentId")){
             redirectAttributes.addFlashAttribute("error", "Please authenticate before accessing this page.");
@@ -27,6 +28,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public void throwable(Exception exception, HttpServletResponse response, RedirectAttributes redirectAttributes) throws IOException {
+        exception.printStackTrace();
         redirectAttributes.addFlashAttribute("error", exception.getMessage());
         response.sendRedirect("/");
     }

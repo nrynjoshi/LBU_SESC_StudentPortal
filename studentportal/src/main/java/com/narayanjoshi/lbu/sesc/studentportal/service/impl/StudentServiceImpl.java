@@ -3,6 +3,7 @@ package com.narayanjoshi.lbu.sesc.studentportal.service.impl;
 import com.narayanjoshi.lbu.sesc.studentportal.doa.StudentRepositoryIfc;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Student;
 import com.narayanjoshi.lbu.sesc.studentportal.service.StudentServiceIfc;
+import com.narayanjoshi.lbu.sesc.studentportal.utils.Util;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +28,7 @@ public class StudentServiceImpl implements StudentServiceIfc {
 
     @Override
     public void createStudent(Student student){
-        long studentId = new Random().nextLong();
-        student.setStudentId(studentId);
+        student.setStudentId(Util.generateStudentId());
         student.setGraduate(false);
         studentRepositoryIfc.save(student);
     }
@@ -36,7 +36,12 @@ public class StudentServiceImpl implements StudentServiceIfc {
     @Override
     public void updateStudent(Student student){
         Student dbStudentRecord = getStudentById(student.getStudentId());
-        dbStudentRecord.setPassword(student.getPassword());
+        if(StringUtils.isBlank(student.getPassword())){
+            dbStudentRecord.setPassword(dbStudentRecord.getPassword());
+        }else{
+            dbStudentRecord.setPassword(student.getPassword());
+        }
+
         dbStudentRecord.setMobileNumber(student.getMobileNumber());
         dbStudentRecord.setHomeAddress(student.getHomeAddress());
         dbStudentRecord.setDob(student.getDob());

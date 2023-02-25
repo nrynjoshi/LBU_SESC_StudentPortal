@@ -1,14 +1,14 @@
 package com.narayanjoshi.lbu.sesc.studentportal.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.time.LocalDate;
+import javax.persistence.*;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -21,8 +21,11 @@ public class Student  extends Common{
     @Column(name = "fullname")
     private String fullname;
 
+
     @Column(name = "dob")
-    private LocalDate dob;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
+    private Date dob;
 
     @Column(name = "mobile_number", unique = true)
     private String mobileNumber;

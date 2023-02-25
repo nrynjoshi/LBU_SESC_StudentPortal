@@ -15,18 +15,16 @@
             <table class="table table-striped table-hover table-bordered">
                 <thead>
                 <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Course Id</th>
+                    <th scope="col">Enrol Date</th>
+                    <th scope="col">Intake</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="course : ${courses}" >
-                    <th scope="row" th:text="${course.courseId}"></th>
-                    <td th:text="${course.name}"></td>
-                    <td th:text="${course.description}"></td>
-                    <td><a class="btn btn-primary" th:href="${course.courseId}" role="button">Enrol</a></td>
+                <tr th:each="enrollment : ${enrollments}" >
+                    <th scope="row" th:text="${enrollment.courseId}"></th>
+                    <td th:text="${enrollment.date}"></td>
+                    <td th:text="${enrollment.intake}"></td>
                 </tr>
                 </tbody>
             </table>

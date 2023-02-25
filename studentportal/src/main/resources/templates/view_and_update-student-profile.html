@@ -11,8 +11,40 @@
 <div class="container mt-5">
     <div class="row d-flex justify-content-center">
         <div class="col-md-10">
-            <h2>Update Student Profile</h2>
-            Content goes here
+
+                <h2>Student Profile</h2>
+                <div>
+                    <form  action="#" th:action="@{/portal/profile}" th:object="${student}" method="post">
+
+                        <div class="mb-3">
+                            <label for="fullname" class="form-label">Full name</label>
+                            <input type="text" class="form-control" id="fullname" th:field="${student.fullname}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="dob" class="form-label">Date of birth</label>
+                            <input type="date" class="form-control" id="dob" th:field="${student.dob}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="mobilenumber" class="form-label">Mobile number</label>
+                            <input type="number" class="form-control" id="mobilenumber" th:field="${student.mobileNumber}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="homeaddress" class="form-label">Home address</label>
+                            <input type="text" class="form-control" id="homeaddress" th:field="${student.homeAddress}">
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="emailaddress" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="emailaddress" th:field="${student.email}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" th:field="${student.password}">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
+                </div>
         </div>
     </div>
 </div>

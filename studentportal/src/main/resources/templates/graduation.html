@@ -13,7 +13,8 @@
         <div class="col-md-6">
             <div class="col-md-10">
                 <h2>Graduation</h2>
-                Content goes here
+                <div class="alert alert-success" role="alert" th:if="${is_graduated == true}">Congratulations, You have successfully graduated from your course. Have a great future ahead. Thank you</div>
+                <div class="alert alert-danger" role="alert" th:unless="${is_graduated == true}">You have not graduated from your course. Please consult your module leader to know more about it.</div>
             </div>
         </div>
     </div>
