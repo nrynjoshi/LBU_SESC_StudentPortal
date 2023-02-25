@@ -12,9 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.Cookie;
-
-//https://www.codejava.net/frameworks/spring-boot/spring-boot-thymeleaf-form-handling-tutorial
 @Controller
 @RequestMapping("/portal")
 public class PortalController {
@@ -105,6 +102,8 @@ public class PortalController {
 
     @GetMapping({ "/enrol/{course_id}"})
     public String enrollIntoCourse(@CookieValue(value = KeyConstant.STUDENT_ID) String studentId, @PathVariable("course_id") String course_id) {
+        //TODO: create student account on both apis
+
         enrollServiceIfc.enrolIntoCourse(Long.valueOf(studentId), course_id);
         return "redirect:/portal/enrollments";
     }

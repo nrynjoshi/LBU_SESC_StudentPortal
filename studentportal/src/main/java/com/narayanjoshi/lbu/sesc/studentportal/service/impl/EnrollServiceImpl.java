@@ -32,6 +32,8 @@ public class EnrollServiceImpl implements EnrollServiceIfc {
         enroll.setDate(LocalDateTime.now());
         enroll.setIntake(IntakeEnum.JAN);
         enrollRepositoryIfc.save(enroll);
+
+        //TODO: When you enrol in a course, a request is sent to the Finance microservice to create an invoice.
     }
 
 }

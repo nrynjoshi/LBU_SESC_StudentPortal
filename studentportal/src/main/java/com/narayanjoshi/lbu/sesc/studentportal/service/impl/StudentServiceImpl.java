@@ -29,8 +29,11 @@ public class StudentServiceImpl implements StudentServiceIfc {
     @Override
     public void createStudent(Student student){
         student.setStudentId(Util.generateStudentId());
-        student.setGraduate(false);
         studentRepositoryIfc.save(student);
+
+        //TODO: When a student is created, a request is sent to the Finance microservice to create an account.
+
+        //TODO: When a student is created, a request is sent to the Library microservice to create an account.
     }
 
     @Override
@@ -59,8 +62,8 @@ public class StudentServiceImpl implements StudentServiceIfc {
 
     @Override
     public boolean getGraduation(long studentId){
-        Student dbStudentRecord = getStudentById(studentId);
-        return dbStudentRecord.isGraduate();
+        //TODO: Upon checking the eligibility to graduate, a request is sent to the Finance microservice to see if there are any outstanding invoices.
+        return false;
     }
 
 }

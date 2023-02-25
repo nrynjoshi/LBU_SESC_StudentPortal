@@ -42,8 +42,4 @@ public class Student  extends Common{
     @Column(name = "student_id", unique = true)
     private long studentId;
 
-    @Column(name = "is_graduate")
-    private boolean isGraduate;
-
-
 }
