@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/portal")
+@RequestMapping("")
 public class PortalController {
 
     @Autowired private CourseServiceIfc courseServiceIfc;
@@ -22,7 +22,12 @@ public class PortalController {
 
     @Autowired private StudentServiceIfc studentServiceIfc;
 
-    @GetMapping({ "/login"})
+    @GetMapping("/")
+    public String redirectToLogin(){
+        return "redirect:/portal/login";
+    }
+
+    @GetMapping({ "portal/login"})
     public String login(Model model) {
         //clear cookies if any exist.
         if(CookieUtils.isCookieExist(KeyConstant.STUDENT_ID)){
@@ -30,10 +35,10 @@ public class PortalController {
         }
 
         model.addAttribute("student", new Student());
-        return "/login";
+        return "index";
     }
 
-    @PostMapping({ "/login"})
+    @PostMapping({ "/portal/login"})
     public String loginPortalSubmit(@ModelAttribute Student student, RedirectAttributes redirectAttributes) throws Exception {
         System.out.println(student.getEmail());
 
@@ -45,19 +50,19 @@ public class PortalController {
         return "redirect:/portal/dashboard";
     }
 
-    @GetMapping({ "/dashboard"})
+    @GetMapping({ "/portal/dashboard"})
     public String dashboardPortalPage(@CookieValue(value = KeyConstant.STUDENT_ID) String studentId, Model model) {
         model.addAttribute("student", new Student());
         return "dashboard";
     }
 
-    @GetMapping({ "/register"})
+    @GetMapping({ "/portal/register"})
     public String registerPortalPage(Model model) {
         model.addAttribute("student", new Student());
         return "/register";
     }
 
-    @PostMapping({ "/register"})
+    @PostMapping({ "/portal/register"})
     public String registerPortalSubmit(@ModelAttribute Student student, RedirectAttributes redirectAttributes) {
         System.out.println(student.getDob());
         studentServiceIfc.createStudent(student);
@@ -65,7 +70,7 @@ public class PortalController {
         return "redirect:/portal/login";
     }
 
-    @GetMapping({ "/courses"})
+    @GetMapping({ "/portal/courses"})
     public String viewCourse(@CookieValue(value = KeyConstant.STUDENT_ID) String studentId, Model model) {
         model.addAttribute("courses", courseServiceIfc.findAllCourse());
         return "view-courses-and-enrol";
@@ -73,13 +78,13 @@ public class PortalController {
 
 
 
-    @GetMapping({ "/profile"})
+    @GetMapping({ "/portal/profile"})
     public String profilePortalPage(@CookieValue(value = KeyConstant.STUDENT_ID) String studentId, Model model) {
         model.addAttribute("student", studentServiceIfc.getStudentById(Long.valueOf(studentId)));
         return "/view_and_update-student-profile";
     }
 
-    @PostMapping({ "/profile"})
+    @PostMapping({ "/portal/profile"})
     public String profilePortalSubmit(@CookieValue(value = KeyConstant.STUDENT_ID) String studentId, @ModelAttribute Student student, RedirectAttributes redirectAttributes) {
         System.out.println(student.getEmail());
 
@@ -88,26 +93,26 @@ public class PortalController {
         return "redirect:/portal/profile";
     }
 
-    @GetMapping({ "/graduation"})
+    @GetMapping({ "/portal/graduation"})
     public String graduationPortalPage(@CookieValue(value = KeyConstant.STUDENT_ID) String studentId, Model model) {
         model.addAttribute("is_graduated", studentServiceIfc.getGraduation(Long.valueOf(studentId)));
         return "/graduation";
     }
 
-    @GetMapping({ "/logout"})
+    @GetMapping({ "/portal/logout"})
     public String logout(@CookieValue(value = KeyConstant.STUDENT_ID) String studentId, Model model) {
         CookieUtils.deleteCookie(KeyConstant.STUDENT_ID);
         return "redirect:/portal/login";
     }
 
-    @GetMapping({ "/enrol/{course_id}"})
+    @GetMapping({ "/portal/enrol/{course_id}"})
     public String enrollIntoCourse(@CookieValue(value = KeyConstant.STUDENT_ID) String studentId, @PathVariable("course_id") String course_id) {
 
         enrollServiceIfc.enrolIntoCourse(Long.valueOf(studentId), course_id);
         return "redirect:/portal/enrollments";
     }
 
-    @GetMapping({ "/enrollments"})
+    @GetMapping({ "/portal/enrollments"})
     public String enrollments(@CookieValue(value = KeyConstant.STUDENT_ID) String studentId, Model model) {
         model.addAttribute("enrollments", enrollServiceIfc.getEnrolCourses(Long.valueOf(studentId)));
         return "view-enrollments";
