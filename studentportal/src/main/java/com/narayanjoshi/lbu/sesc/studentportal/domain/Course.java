@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -19,7 +21,7 @@ public class Course extends Common{
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 1000)
     private String description;
 
     @Column(name = "lecture")
@@ -33,12 +35,12 @@ public class Course extends Common{
     private LectureTypeEnum lectureType;
 
     @Column(name = "starttime")
-    private String startTime;
+    private LocalTime startTime;
 
     @Column(name = "end_time")
-    private String endTime;
+    private LocalTime endTime;
 
-    @Column(name = "course_id")
+    @Column(name = "course_id", unique = true)
     private String courseId;
 
 

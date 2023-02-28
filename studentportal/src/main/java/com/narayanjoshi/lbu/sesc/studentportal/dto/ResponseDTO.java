@@ -24,4 +24,8 @@ public class ResponseDTO<T> {
         this.item = item;
     }
 
+    public ResponseDTO(List<T> items){
+        this.items = items;
+    }
+
 }

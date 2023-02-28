@@ -1,0 +1,36 @@
+version: '2'
+
+networks:
+  default:
+
+services:
+
+  studentportaldb:
+    image: mysql
+    restart: always
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    networks:
+      - default
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=$$MYSQL_ROOT_PASSWORD --execute \"SHOW DATABASES;\""
+      timeout: 2s
+      retries: 10
+
+  studentportalapp:
+    image: narayan/studentportal:1.0
+    environment:
+      spring.datasource.url: jdbc:mysql://localhost:3306/${DB_NAME}
+      spring.datasource.username: ${DB_APPLICATION_USER}
+      spring.datasource.password: ${DB_APPLICATION_PASSWORD}
+    ports:
+      - "8082:8082"
+    expose:
+      - "8082"
+    depends_on:
+      studentportaldb:
+        condition: service_healthy
+    networks:
+      - default
