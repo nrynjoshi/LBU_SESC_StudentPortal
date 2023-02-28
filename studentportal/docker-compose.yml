@@ -5,11 +5,9 @@ networks:
 
 services:
 
-  financedb:
-    image: mariadb
+  studentportaldb:
+    image: mysql
     restart: always
-    volumes:
-      - ./migrations/mysql-migrations.sql:/docker-entrypoint-initdb.d/mysql-mysql-migrations.sql
     ports:
       - "3308:3306"
     environment:
@@ -21,18 +19,18 @@ services:
       timeout: 2s
       retries: 10
 
-  financeapp:
-    image: tvergilio/finance:1.3
+  studentportalapp:
+    image: narayan/studentportal:1.0
     environment:
-      spring.datasource.url: jdbc:mariadb://financedb:3306/${DB_NAME}
+      spring.datasource.url: jdbc:mysql://localhost:3306/${DB_NAME}
       spring.datasource.username: ${DB_APPLICATION_USER}
       spring.datasource.password: ${DB_APPLICATION_PASSWORD}
     ports:
-      - "8081:8081"
+      - "8082:8082"
     expose:
-      - "8081"
+      - "8082"
     depends_on:
-      financedb:
+      studentportaldb:
         condition: service_healthy
     networks:
       - default

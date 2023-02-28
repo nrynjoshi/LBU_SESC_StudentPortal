@@ -102,7 +102,6 @@ public class PortalController {
 
     @GetMapping({ "/enrol/{course_id}"})
     public String enrollIntoCourse(@CookieValue(value = KeyConstant.STUDENT_ID) String studentId, @PathVariable("course_id") String course_id) {
-        //TODO: create student account on both apis
 
         enrollServiceIfc.enrolIntoCourse(Long.valueOf(studentId), course_id);
         return "redirect:/portal/enrollments";
