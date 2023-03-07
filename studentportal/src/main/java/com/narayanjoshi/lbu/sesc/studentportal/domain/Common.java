@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Setter
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity
+@NoArgsConstructor
 public abstract class Common {
 
     @Id

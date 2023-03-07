@@ -10,6 +10,7 @@ import com.narayanjoshi.lbu.sesc.studentportal.utils.HttpUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.method.annotation.ServletResponseMethodArgumentResolver;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -49,9 +50,17 @@ public class EnrollServiceImpl implements EnrollServiceIfc {
      */
     private void createFinanceServiceInvoice(long studentId) {
         //TODO:
-        Map<String, Object> requestMap = new HashMap();
-        requestMap.put("studentId", String.valueOf(studentId));
-        httpUtil.post(HostUrl.FINANCE_CREATE_INVOICE, requestMap);
+        Map<String, Object> createFinanceServiceMap = new HashMap();
+        
+        createFinanceServiceMap.put("amount", 100.00);
+        createFinanceServiceMap.put("dueDate", "2022-11-06");
+        createFinanceServiceMap.put("type", "TUITION_FEES");
+        
+        Map<String, Object> accountMap = new HashMap();
+        accountMap.put("studentId", String.valueOf(studentId));
+        
+        createFinanceServiceMap.put("account", accountMap);
+        httpUtil.post(HostUrl.FINANCE_CREATE_INVOICE, createFinanceServiceMap);
     }
 
 }

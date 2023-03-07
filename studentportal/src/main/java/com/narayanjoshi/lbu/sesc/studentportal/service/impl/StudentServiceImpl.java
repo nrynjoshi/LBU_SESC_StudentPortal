@@ -91,17 +91,10 @@ public class StudentServiceImpl implements StudentServiceIfc {
     public boolean getGraduation(long studentId){
         //TODO: Upon checking the eligibility to graduate, a request is sent to the Finance microservice to see if there are any outstanding invoices.
         Map<String,Object> responseMap =httpUtil.get(HostUrl.FINANCE_GRADUATION_CHECK+"/"+studentId);
-       List<Map<String,Object>> list = (List<Map<String, Object>>) ((Map<String,Object>) responseMap.get("_embedded")).get("invoiceList");
+       
+       boolean hasOutstandingBalance =  (boolean) responseMap.get("hasOutstandingBalance");
 
-       boolean isGraduate = true;
-       for(Map<String,Object> map: list){
-           String status = (String) map.get("status");
-           if(!StringUtils.equalsIgnoreCase(status, "PAID")){
-               isGraduate = false;
-           }
-       }
-
-       return isGraduate;
+       return !hasOutstandingBalance;
     }
 
 }

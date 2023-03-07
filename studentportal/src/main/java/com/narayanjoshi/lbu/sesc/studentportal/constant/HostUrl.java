@@ -7,10 +7,10 @@ public class HostUrl {
 
     public static String FINANCE_ACCOUNT_CREATE = FINANCE+"/accounts";
 
-    public static String FINANCE_GRADUATION_CHECK = FINANCE+"/invoice";
+    public static String FINANCE_GRADUATION_CHECK = FINANCE+"/accounts/student/";
     public static String FINANCE_CREATE_INVOICE = FINANCE+"/invoices";
 
-    public static String LIBRARY_ACCOUNT_CREATE = LIBRARY+"/accounts";
+    public static String LIBRARY_ACCOUNT_CREATE = LIBRARY+"/api/register";
 
 
 
