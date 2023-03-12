@@ -1,12 +1,27 @@
 package com.narayanjoshi.lbu.sesc.studentportal.controller;
 
-import com.narayanjoshi.lbu.sesc.studentportal.constant.Endpoint;
-import com.narayanjoshi.lbu.sesc.studentportal.dto.ResponseDTO;
-import com.narayanjoshi.lbu.sesc.studentportal.service.EnrollServiceIfc;
-import com.narayanjoshi.lbu.sesc.studentportal.service.StudentServiceIfc;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.narayanjoshi.lbu.sesc.studentportal.constant.Endpoint;
+import com.narayanjoshi.lbu.sesc.studentportal.domain.Student;
+import com.narayanjoshi.lbu.sesc.studentportal.dto.ResponseDTO;
+import com.narayanjoshi.lbu.sesc.studentportal.exception.AuthenticationException;
+import com.narayanjoshi.lbu.sesc.studentportal.service.StudentServiceIfc;
+import com.narayanjoshi.lbu.sesc.studentportal.utils.AuthenticateUtil;
 
 @RestController
 @RequestMapping(value = Endpoint.ROOT_API_V1 + Endpoint.STUDENT_URI)
@@ -16,6 +31,19 @@ public class StudentController {
 
     StudentController(StudentServiceIfc  studentServiceIfc){
         this.studentServiceIfc = studentServiceIfc;
+    }
+    
+    @GetMapping("/login")
+    public @ResponseBody ResponseEntity<ResponseDTO> loginApi(@RequestBody Student student, HttpServletRequest request){
+    	try {
+    	    request.login(student.getUsername(), student.getPassword());
+    	  } catch (ServletException e) {
+    	    throw new AuthenticationException("Invalid username or password");
+    	  }
+
+    	Map<String, Object> responseMap = new HashMap<>();
+    	responseMap.put("student_id", AuthenticateUtil.getStudentId());
+        return new ResponseEntity<ResponseDTO>(new ResponseDTO(responseMap), HttpStatus.OK);
     }
 
     @GetMapping

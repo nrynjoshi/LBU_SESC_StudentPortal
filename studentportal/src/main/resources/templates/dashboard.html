@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +9,8 @@
 	rel="stylesheet"
 	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
 	crossorigin="anonymous">
+
+	<link rel="stylesheet" href="../static/css/main.css">
 </head>
 <body>
 
@@ -18,19 +20,15 @@
 		<div class="container mt-5">
 			<div class="row d-flex justify-content-center">
 				<div class="col-md-12">
-					<div class="card w-75">
-						<div class="card-body">
-							<h5 class="card-title">Welcome to Student Portal</h5>
-							<p class="card-text">Hello <span sec:authentication=="${#principal.fullname}></span>, welcome to the student portal.</p>
-						</div>
-					</div>
+					<h2>Dashboard</h2>
+					<p class="card-text">Hello <span sec:authentication="principal.fullname"></span>, welcome to the student portal.</p>
 				</div>
 			</div>
 		</div>
 	</main>
 	<!-- End #main -->
 
-	<div th:replace="fragments/footers.html"></div>
+	<div th:replace="fragments/footer.html"></div>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"

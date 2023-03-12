@@ -16,13 +16,13 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Autowired
-    private CustomAuthenticationProvider authProvider;
+    private CustomPortalAuthenticationProvider portalAuthProvider;
 
     @Bean
-    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+    public AuthenticationManager portalAuthManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = 
             http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.authenticationProvider(authProvider);
+        authenticationManagerBuilder.authenticationProvider(portalAuthProvider);
         return authenticationManagerBuilder.build();
     }
 
@@ -35,7 +35,7 @@ public class SecurityConfig {
          .loginPage("/login")
          .loginProcessingUrl("/login")
          .defaultSuccessUrl("/dashboard", true)
-         .failureUrl("/login.html?error=true")
+         .failureUrl("/login?error=true")
          .and()
          .logout()
          .logoutUrl("/logout")
@@ -46,6 +46,8 @@ public class SecurityConfig {
          .antMatchers("/api/**")
          .hasRole("API")
          .antMatchers("/login*")
+         .permitAll()
+         .antMatchers("/register*")
          .permitAll()
          .anyRequest()
          .authenticated();

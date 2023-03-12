@@ -7,9 +7,25 @@ import com.narayanjoshi.lbu.sesc.studentportal.domain.Student;
 
 public class AuthenticateUtil {
 	
+	public static boolean isAuthenticate() {
+		Authentication authentication = getAuthentication();
+		if(authentication !=null) {
+			Object principal = authentication.getPrincipal();
+			if(principal !=null && principal instanceof Student) {
+				return true;
+			}
+		}
+		return  false;
+	}
+	
 	public static long getStudentId() {
-		Student student = (Student) getAuthentication().getPrincipal();
+		Student student = getPrincipal();
 		return student.getStudentId();
+	}
+
+	private static Student getPrincipal() {
+		Student student = (Student) getAuthentication().getPrincipal();
+		return student;
 	}
 
 	private static Authentication getAuthentication() {

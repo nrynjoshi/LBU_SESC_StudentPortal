@@ -1,25 +1,21 @@
 package com.narayanjoshi.lbu.sesc.studentportal.service.impl;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.narayanjoshi.lbu.sesc.studentportal.doa.StudentRepositoryIfc;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Student;
+import com.narayanjoshi.lbu.sesc.studentportal.exception.AuthenticationException;
 import com.narayanjoshi.lbu.sesc.studentportal.service.EnrollServiceIfc;
 import com.narayanjoshi.lbu.sesc.studentportal.service.StudentServiceIfc;
 import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.constant.PaymentType;
-import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.constant.ThirdPartyEndpoint;
 import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.service.ThirdPartyAPIServiceIfc;
-import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.util.HttpUtil;
 import com.narayanjoshi.lbu.sesc.studentportal.utils.AuthenticateUtil;
 import com.narayanjoshi.lbu.sesc.studentportal.utils.Util;
 
@@ -35,19 +31,23 @@ public class StudentServiceImpl implements StudentServiceIfc {
     @Autowired private ThirdPartyAPIServiceIfc thirdPartyAPIServiceIfc;
 
     @Override
-    public Student loginStudent(String username, String password) {
+    public Student loginStudent(String username, String password) throws AuthenticationException {
         Student dbStudentRecord = studentRepositoryIfc.findByUsername(username);
-        
-        if(dbStudentRecord!=null && passwordEncoder.matches(password, dbStudentRecord.getPassword())){
-            return dbStudentRecord;
+        if(dbStudentRecord!=null) {
+        	 if(passwordEncoder.matches(password, dbStudentRecord.getPassword())){
+                 return dbStudentRecord;
+             }
+        	 throw new AuthenticationException("Credential does not match.");
         }
-        throw new AuthenticationCredentialsNotFoundException("Username or password does not match");
+       
+        throw new AuthenticationException("User does not exist. Please register");
     }
 
     @Override
     public void createStudent(Student student){
         long studentId = Util.generateStudentId();
         student.setStudentId(studentId);
+        student.setPassword(passwordEncoder.encode(student.getPassword()));
         studentRepositoryIfc.save(student);
 
 

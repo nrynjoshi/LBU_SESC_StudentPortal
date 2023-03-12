@@ -13,6 +13,8 @@ import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.service.ThirdPartyA
 import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.util.HttpUtil;
 import com.narayanjoshi.lbu.sesc.studentportal.utils.AuthenticateUtil;
 
+//https://www.youtube.com/watch?v=6Z2XXVkB3gk
+//https://www.youtube.com/watch?v=oLiHyhMdSwA
 @Service
 public class ThirdPartyAPIServiceImpl implements ThirdPartyAPIServiceIfc {
 
@@ -43,20 +45,20 @@ public class ThirdPartyAPIServiceImpl implements ThirdPartyAPIServiceIfc {
 		accountMap.put("studentId", String.valueOf(studentId));
 
 		createFinanceServiceMap.put("account", accountMap);
-		httpUtil.post(ThirdPartyEndpoint.FINANCE_CREATE_INVOICE, createFinanceServiceMap);
+		httpUtil.post(ThirdPartyEndpoint.CREATE_FINANCE_INVOICE, createFinanceServiceMap);
 	}
 
 	@Override
 	public void createFinanceAccount(long studentId) {
 		Map<String, Object> requestFinanceAccountCreateMap = new HashMap();
 		requestFinanceAccountCreateMap.put("studentId", String.valueOf(studentId));
-		httpUtil.post(ThirdPartyEndpoint.FINANCE_ACCOUNT_CREATE, requestFinanceAccountCreateMap);
+		httpUtil.post(ThirdPartyEndpoint.CREATE_FINANCE_ACCOUNT, requestFinanceAccountCreateMap);
 	}
 
 	@Override
 	public void createLibraryAccount(long studentId) {
 		Map<String, Object> requestLibraryAccountCreateMap = new HashMap();
 		requestLibraryAccountCreateMap.put("studentId", String.valueOf(studentId));
-		httpUtil.post(ThirdPartyEndpoint.LIBRARY_ACCOUNT_CREATE, requestLibraryAccountCreateMap);
+		httpUtil.post(ThirdPartyEndpoint.CREATE_LIBRARY_ACCOUNT, requestLibraryAccountCreateMap);
 	}
 }

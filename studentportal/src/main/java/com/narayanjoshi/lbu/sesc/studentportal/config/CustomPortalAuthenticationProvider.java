@@ -13,7 +13,7 @@ import com.narayanjoshi.lbu.sesc.studentportal.domain.Student;
 import com.narayanjoshi.lbu.sesc.studentportal.service.StudentServiceIfc;
 
 @Component
-public class CustomAuthenticationProvider implements AuthenticationProvider {
+public class CustomPortalAuthenticationProvider implements AuthenticationProvider {
 
 	 @Autowired private StudentServiceIfc studentServiceIfc;
 	
@@ -25,12 +25,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String password = authentication.getCredentials().toString();
         
         Student loginStudent = studentServiceIfc.loginStudent(username, password);
-        if (loginStudent!= null) { //shouldAuthenticateAgainstThirdPartySystem()
-            return new UsernamePasswordAuthenticationToken(
-            		loginStudent, password, new ArrayList<>());
-        } else {
-            return null;
-        }
+    	return new UsernamePasswordAuthenticationToken(
+        		loginStudent, password, new ArrayList<>());
+        
     }
 
     @Override

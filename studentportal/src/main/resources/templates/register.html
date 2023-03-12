@@ -35,7 +35,11 @@
 
                     <div class="mb-3">
                         <label for="emailaddress" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="emailaddress" th:field="${student.username}">
+                        <input type="email" class="form-control" id="emailaddress" th:field="${student.email}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" th:field="${student.username}">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>

@@ -27,37 +27,47 @@ import com.narayanjoshi.lbu.sesc.studentportal.utils.AuthenticateUtil;
 @Transactional
 public class EnrollServiceImpl implements EnrollServiceIfc {
 
-    @Autowired private EnrollRepositoryIfc enrollRepositoryIfc;
-    
-    @Autowired private CourseRepositoryIfc courseRepositoryIfc;
-    
-    @Autowired private ThirdPartyAPIServiceIfc thirdPartyAPIServiceIfc;
+	@Autowired
+	private EnrollRepositoryIfc enrollRepositoryIfc;
 
+	@Autowired
+	private CourseRepositoryIfc courseRepositoryIfc;
 
-    @Override
-    public List<Enroll> getEnrolCourses(){
-    	long studentId =  AuthenticateUtil.getStudentId();
-        return enrollRepositoryIfc.findByStudentId(studentId);
-    }
+	@Autowired
+	private ThirdPartyAPIServiceIfc thirdPartyAPIServiceIfc;
 
-    @Override
-    public void enrolIntoCourse(String courseId){
-    	Course course = courseRepositoryIfc.findByCourseId(courseId);
-    	long studentId =  AuthenticateUtil.getStudentId();
-        Enroll enroll= new Enroll();
-        enroll.setCourseId(courseId);
-        enroll.setStudentId(studentId);
-        enroll.setDate(LocalDateTime.now());
-        enroll.setIntake(IntakeEnum.JAN);
-        enrollRepositoryIfc.save(enroll);
+	@Override
+	public List<Enroll> getEnrolCourses() {
+		long studentId = AuthenticateUtil.getStudentId();
+		return enrollRepositoryIfc.findByStudentId(studentId);
+	}
 
-        thirdPartyAPIServiceIfc.createFinanceServiceInvoice(studentId, course.getFee(), PaymentType.COURSE_FEE);
-    }
+	@Override
+	public void enrolIntoCourse(String courseId) {
+		Course course = courseRepositoryIfc.findByCourseId(courseId);
+		long studentId = AuthenticateUtil.getStudentId();
 
-    /**
-     * When you enrol in a course, a request is sent to the Finance microservice to create an invoice.
-     * @param studentId
-     */
-   
+		Enroll alreadyEnroll = enrollRepositoryIfc.findByStudentIdAndCourse(studentId, course);
+
+		if (alreadyEnroll == null) {
+			Enroll enroll = new Enroll();
+			enroll.setCourseId(courseId);
+			enroll.setStudentId(studentId);
+			enroll.setDate(LocalDateTime.now());
+			enroll.setIntake(IntakeEnum.JAN);
+			enroll.setCourse(course);
+			enrollRepositoryIfc.save(enroll);
+
+			thirdPartyAPIServiceIfc.createFinanceServiceInvoice(studentId, course.getFee(), PaymentType.TUITION_FEES);
+		}
+
+	}
+
+	/**
+	 * When you enrol in a course, a request is sent to the Finance microservice to
+	 * create an invoice.
+	 * 
+	 * @param studentId
+	 */
 
 }
