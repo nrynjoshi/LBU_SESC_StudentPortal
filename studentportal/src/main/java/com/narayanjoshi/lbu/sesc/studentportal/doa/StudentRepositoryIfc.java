@@ -9,6 +9,6 @@ public interface StudentRepositoryIfc extends JpaRepository<Student, Long> {
 
     Student findByStudentId(long studentId);
 
-    Student findByEmail(String email);
+    Student findByUsername(String username);
 
 }

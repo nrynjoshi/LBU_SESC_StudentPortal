@@ -13,7 +13,7 @@
         <div class="col-md-6">
             <h2>Register</h2>
             <div>
-                <form  action="#" th:action="@{/portal/register}" th:object="${student}" method="post">
+                <form  action="#" th:action="@{/register}" th:object="${student}" method="post">
 
                     <div class="mb-3">
                         <label for="fullname" class="form-label">Full name</label>
@@ -35,7 +35,7 @@
 
                     <div class="mb-3">
                         <label for="emailaddress" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="emailaddress" th:field="${student.email}">
+                        <input type="email" class="form-control" id="emailaddress" th:field="${student.username}">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>

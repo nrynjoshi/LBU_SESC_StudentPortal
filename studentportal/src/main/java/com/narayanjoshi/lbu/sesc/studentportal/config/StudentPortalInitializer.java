@@ -1,14 +1,14 @@
 package com.narayanjoshi.lbu.sesc.studentportal.config;
 
-import com.narayanjoshi.lbu.sesc.studentportal.constant.LectureTypeEnum;
-import com.narayanjoshi.lbu.sesc.studentportal.domain.Course;
-import com.narayanjoshi.lbu.sesc.studentportal.service.CourseServiceIfc;
+import java.math.BigDecimal;
+import java.util.List;
+
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalTime;
-import java.util.List;
+import com.narayanjoshi.lbu.sesc.studentportal.domain.Course;
+import com.narayanjoshi.lbu.sesc.studentportal.service.CourseServiceIfc;
 
 @Component
 public class StudentPortalInitializer {
@@ -28,31 +28,32 @@ public class StudentPortalInitializer {
     private void loadCourse() {
        List<Course> courseList = courseServiceIfc.findAllCourse();
        if(courseList.isEmpty()){
-           Course cloudComputingCourse= new Course("Cloud Computing Development", "Software engineering course", "John", "JG001", LectureTypeEnum.PHYSICAL, LocalTime.of(00,00), LocalTime.of(00,00), "COMP637");
+
+           Course cloudComputingCourse= new Course("COMP637", "Cloud Computing Development", null, new BigDecimal(350.00) );
            this.courseServiceIfc.createCourse(cloudComputingCourse);
 
-           Course databaseCourse= new Course("Database Systems", "Software engineering course", "John", null, LectureTypeEnum.RECORDED,LocalTime.of(00,00), LocalTime.of(00,00), "COMP712");
+           Course databaseCourse= new Course("COMP712", "Database Systems", null, new BigDecimal(230.30));
            this.courseServiceIfc.createCourse(databaseCourse);
 
-           Course advanceSoftwareCourse= new Course("Advanced Software Engineering", "Software engineering course", "John", "JG005", LectureTypeEnum.PHYSICAL,LocalTime.of(00,00), LocalTime.of(00,00), "COMP725");
+           Course advanceSoftwareCourse= new Course("COMP725", "Advanced Software Engineering", null, new BigDecimal(350.00));
            this.courseServiceIfc.createCourse(advanceSoftwareCourse);
 
-           Course researchCourse= new Course("Research Practice", "Research course", "John", null, LectureTypeEnum.ONLINE,LocalTime.of(00,00), LocalTime.of(00,00), "COMP738");
+           Course researchCourse= new Course("COMP738", "Research Practice", null, new BigDecimal(480.50));
            this.courseServiceIfc.createCourse(researchCourse);
 
-           Course projectCourse= new Course("Project Management", "Management course", "John", "JG012 Computer Lab", LectureTypeEnum.PHYSICAL,LocalTime.of(00,00), LocalTime.of(00,00), "COMP753");
+           Course projectCourse= new Course("COMP753", "Project Management", null, new BigDecimal(360.00));
            this.courseServiceIfc.createCourse(projectCourse);
 
-           Course serviceComputingCourse= new Course("Software Engineering for Service Computing", "Service computing course", "John", null, LectureTypeEnum.ONLINE,LocalTime.of(00,00), LocalTime.of(00,00), "COMP758");
+           Course serviceComputingCourse= new Course("COMP758", "Software Engineering for Service Computing", null, new BigDecimal(615.00));
            this.courseServiceIfc.createCourse(serviceComputingCourse);
 
-           Course dissertationCourse= new Course("Msc Dissertation", "Dissertation course", "John", null, LectureTypeEnum.ONLINE,LocalTime.of(00,00), LocalTime.of(00,00), "COMP763");
+           Course dissertationCourse= new Course("COMP763", "Msc Dissertation", null, new BigDecimal(550.00));
            this.courseServiceIfc.createCourse(dissertationCourse);
 
-           Course softwareCourse= new Course("Software And System", "IOT course", "John", "JG001", LectureTypeEnum.PHYSICAL,LocalTime.of(00,00), LocalTime.of(00,00), "COMP703");
+           Course softwareCourse= new Course("COMP703", "Software And System", null, new BigDecimal(200.18));
            this.courseServiceIfc.createCourse(softwareCourse);
 
-           Course datawareHourseCourse= new Course("Data ware house", "Big data course", "John", "JG001", LectureTypeEnum.PHYSICAL,LocalTime.of(00,00), LocalTime.of(00,00), "COMP713");
+           Course datawareHourseCourse= new Course("COMP713", "Data ware house", null, new BigDecimal(700.12));
            this.courseServiceIfc.createCourse(datawareHourseCourse);
        }
     }

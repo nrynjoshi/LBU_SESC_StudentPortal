@@ -1,14 +1,19 @@
 package com.narayanjoshi.lbu.sesc.studentportal.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.*;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -20,7 +25,6 @@ public class Student  extends Common{
 
     @Column(name = "fullname")
     private String fullname;
-
 
     @Column(name = "dob")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -35,6 +39,9 @@ public class Student  extends Common{
 
     @Column(name = "email_address", unique = true)
     private String email;
+    
+    @Column(name = "username", unique = true)
+    private String username;
 
     @Column(name = "password")
     private String password;

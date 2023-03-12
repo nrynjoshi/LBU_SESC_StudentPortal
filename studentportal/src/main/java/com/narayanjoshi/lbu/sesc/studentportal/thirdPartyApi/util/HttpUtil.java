@@ -1,4 +1,4 @@
-package com.narayanjoshi.lbu.sesc.studentportal.utils;
+package com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.util;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;

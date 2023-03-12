@@ -1,6 +1,6 @@
-package com.narayanjoshi.lbu.sesc.studentportal.constant;
+package com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.constant;
 
-public class HostUrl {
+public class ThirdPartyEndpoint {
 
     private static String FINANCE = "http://localhost:8081";
     private static String LIBRARY = "http://localhost:80";

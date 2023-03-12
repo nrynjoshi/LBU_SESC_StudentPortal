@@ -30,7 +30,7 @@ public class CourseServiceImpl implements CourseServiceIfc {
 
     @Override
     public List<Course> searchCourses(String name){
-        return courseRepositoryIfc.findByName(name);
+        return courseRepositoryIfc.findByTitle(name);
     }
 
 
