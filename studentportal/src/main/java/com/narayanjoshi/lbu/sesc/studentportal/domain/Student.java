@@ -29,12 +29,6 @@ public class Student  extends Common{
     @Column(name = "fullname", nullable = false)
     private String fullname;
 
-	@JsonProperty("dob")
-    @Column(name = "dob")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
-    private Date dob;
-
 	@JsonProperty("mobile_number")
     @Column(name = "mobile_number", unique = true)
     private String mobileNumber;

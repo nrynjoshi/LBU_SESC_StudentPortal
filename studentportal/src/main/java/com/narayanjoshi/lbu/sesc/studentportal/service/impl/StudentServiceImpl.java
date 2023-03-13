@@ -73,7 +73,6 @@ public class StudentServiceImpl implements StudentServiceIfc {
 
         dbStudentRecord.setMobileNumber(student.getMobileNumber());
         dbStudentRecord.setHomeAddress(student.getHomeAddress());
-        dbStudentRecord.setDob(student.getDob());
         dbStudentRecord.setFullname(student.getFullname());
         dbStudentRecord.setUsername(student.getUsername());
         dbStudentRecord.setEmail(student.getEmail());
@@ -91,7 +90,7 @@ public class StudentServiceImpl implements StudentServiceIfc {
 	@Override
     public Student getStudentByIdWithoutPassword(long studentId){
 		Student student = getStudentById(studentId);
-        student.setPassword(null);
+//        student.setPassword("");
         return student;
     }
     

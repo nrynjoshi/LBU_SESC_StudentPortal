@@ -32,7 +32,7 @@ public class StudentController {
 		this.studentServiceIfc = studentServiceIfc;
 	}
 
-	@GetMapping("/login")
+	@PostMapping("/login")
 	public @ResponseBody ResponseEntity loginApi(@RequestBody Student student, HttpServletRequest request) {
 		
 		if(!AuthenticateUtil.isAuthenticate()) {

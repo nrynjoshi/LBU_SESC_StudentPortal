@@ -43,7 +43,7 @@ public class SecurityConfig {
          .and()
          
          .authorizeRequests()
-         .antMatchers("/api/v1/student/login", "/api/v1/student/register")
+         .antMatchers("/api/v1/student/login", "/api/v1/student/register", "/login*", "/register*")
          .permitAll()
          .anyRequest()
          .authenticated();
