@@ -24,7 +24,6 @@ import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.util.HttpUtil;
 import com.narayanjoshi.lbu.sesc.studentportal.utils.AuthenticateUtil;
 
 @Service
-@Transactional
 public class EnrollServiceImpl implements EnrollServiceIfc {
 
 	@Autowired

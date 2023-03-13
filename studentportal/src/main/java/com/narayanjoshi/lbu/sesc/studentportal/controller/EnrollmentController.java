@@ -24,12 +24,13 @@ public class EnrollmentController {
 
     @GetMapping
     public @ResponseBody ResponseEntity getEnrollments(){
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>(enrollServiceIfc.getEnrolCourses(), HttpStatus.OK);
     }
 
     @PostMapping
     public @ResponseBody ResponseEntity enrollIntoCourse(@RequestParam("course_id") String courseId){
-        return new ResponseEntity<>(null, HttpStatus.OK);
+    	enrollServiceIfc.enrolIntoCourse(courseId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

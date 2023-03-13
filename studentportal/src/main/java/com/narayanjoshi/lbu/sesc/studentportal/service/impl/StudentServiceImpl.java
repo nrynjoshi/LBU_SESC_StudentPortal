@@ -20,7 +20,6 @@ import com.narayanjoshi.lbu.sesc.studentportal.utils.AuthenticateUtil;
 import com.narayanjoshi.lbu.sesc.studentportal.utils.Util;
 
 @Service
-@Transactional
 public class StudentServiceImpl implements StudentServiceIfc {
 
     @Autowired private StudentRepositoryIfc studentRepositoryIfc;
@@ -64,7 +63,7 @@ public class StudentServiceImpl implements StudentServiceIfc {
     	
     	long studentId =  AuthenticateUtil.getStudentId();
     	
-        Student dbStudentRecord = getStudentById(student.getStudentId());
+        Student dbStudentRecord = getStudentById(studentId);
         if(StringUtils.isBlank(student.getPassword())){
             dbStudentRecord.setPassword(dbStudentRecord.getPassword());
         }else{
@@ -90,7 +89,7 @@ public class StudentServiceImpl implements StudentServiceIfc {
 	@Override
     public Student getStudentByIdWithoutPassword(long studentId){
 		Student student = getStudentById(studentId);
-//        student.setPassword("");
+        student.setPassword("");
         return student;
     }
     
