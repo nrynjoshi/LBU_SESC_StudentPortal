@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.narayanjoshi.lbu.sesc.studentportal.constant.Endpoint;
-import com.narayanjoshi.lbu.sesc.studentportal.dto.ResponseDTO;
 import com.narayanjoshi.lbu.sesc.studentportal.service.EnrollServiceIfc;
 
 @RestController
@@ -24,13 +23,13 @@ public class EnrollmentController {
     }
 
     @GetMapping
-    public @ResponseBody ResponseEntity<ResponseDTO> getEnrollments(){
-        return new ResponseEntity<ResponseDTO>(new ResponseDTO(null), HttpStatus.OK);
+    public @ResponseBody ResponseEntity getEnrollments(){
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     @PostMapping
-    public @ResponseBody ResponseEntity<ResponseDTO> enrollIntoCourse(@RequestParam String name){
-        return new ResponseEntity<ResponseDTO>(new ResponseDTO(null), HttpStatus.OK);
+    public @ResponseBody ResponseEntity enrollIntoCourse(@RequestParam("course_id") String courseId){
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
 

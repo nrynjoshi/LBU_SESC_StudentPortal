@@ -51,7 +51,6 @@ public class EnrollServiceImpl implements EnrollServiceIfc {
 
 		if (alreadyEnroll == null) {
 			Enroll enroll = new Enroll();
-			enroll.setCourseId(courseId);
 			enroll.setStudentId(studentId);
 			enroll.setDate(LocalDateTime.now());
 			enroll.setIntake(IntakeEnum.JAN);

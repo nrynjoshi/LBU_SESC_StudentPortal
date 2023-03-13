@@ -9,9 +9,13 @@ public interface StudentServiceIfc {
 
     void updateStudent(Student student);
 
-    Student getStudentById(long studentId);
+//    Student getStudentById(long studentId);
 
 	Student loginStudent(String username, String password) throws AuthenticationException;
 
 	boolean isEligibleGraduation();
+
+	Student getStudentByIdWithoutPassword(long studentId);
+
+	Student getStudentById(long studentId);
 }

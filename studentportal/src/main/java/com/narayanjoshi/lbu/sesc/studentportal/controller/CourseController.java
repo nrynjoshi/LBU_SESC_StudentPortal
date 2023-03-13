@@ -1,7 +1,11 @@
 package com.narayanjoshi.lbu.sesc.studentportal.controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.List;
 
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.narayanjoshi.lbu.sesc.studentportal.constant.Endpoint;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Course;
-import com.narayanjoshi.lbu.sesc.studentportal.dto.ResponseDTO;
 import com.narayanjoshi.lbu.sesc.studentportal.service.CourseServiceIfc;
 
 @RestController
@@ -26,15 +29,23 @@ public class CourseController {
     }
 
     @GetMapping(value = Endpoint.VIEW_COURSE_URI)
-    public @ResponseBody ResponseEntity<ResponseDTO> getCourses(){
+    public @ResponseBody ResponseEntity getCourses(){
        List<Course> courseList = this.courseServiceIfc.findAllCourse();
-        return new ResponseEntity<ResponseDTO>(new ResponseDTO(courseList), HttpStatus.OK);
+       
+       CollectionModel<Course> collectionModel= CollectionModel.of(courseList);
+       collectionModel.add(linkTo(methodOn(CourseController.class).getCourses()).withSelfRel());
+       collectionModel.add(linkTo(methodOn(CourseController.class).searchCourses("search_keyword")).withRel("search"));
+       return new ResponseEntity<>(collectionModel, HttpStatus.OK);
     }
 
     @GetMapping(value = Endpoint.SEARCH_COURSE_URI)
-    public @ResponseBody ResponseEntity<ResponseDTO> searchCourses(@RequestParam String name){
-        List<Course> courseList = this.courseServiceIfc.searchCourses(name);
-        return new ResponseEntity<ResponseDTO>(new ResponseDTO(courseList), HttpStatus.OK);
+    public @ResponseBody ResponseEntity searchCourses(@RequestParam String title){
+        List<Course> courseList = this.courseServiceIfc.searchCourses(title);
+        
+        CollectionModel<Course> collectionModel= CollectionModel.of(courseList);
+        collectionModel.add(linkTo(methodOn(CourseController.class).searchCourses(title)).withSelfRel());
+        collectionModel.add(linkTo(methodOn(CourseController.class).getCourses()).withRel("courses"));
+        return new ResponseEntity<>(collectionModel, HttpStatus.OK);
     }
 
 }

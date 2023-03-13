@@ -83,8 +83,15 @@ public class StudentServiceImpl implements StudentServiceIfc {
     }
 
     @Override
-    public Student getStudentById(long studentId){
-        Student student = studentRepositoryIfc.findByStudentId(studentId);
+    public Student getStudentById(long studentId) {
+    	Student student = studentRepositoryIfc.findByStudentId(studentId);
+		return student;
+	}
+
+	@Override
+    public Student getStudentByIdWithoutPassword(long studentId){
+		Student student = getStudentById(studentId);
+        student.setPassword(null);
         return student;
     }
     

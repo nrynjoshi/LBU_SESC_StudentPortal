@@ -8,24 +8,22 @@ import com.narayanjoshi.lbu.sesc.studentportal.domain.Student;
 public class AuthenticateUtil {
 	
 	public static boolean isAuthenticate() {
+		return getPrincipal() != null;
+	}
+	
+	public static long getStudentId() {
+		return getPrincipal().getStudentId();
+	}
+
+	private static Student getPrincipal() {
 		Authentication authentication = getAuthentication();
 		if(authentication !=null) {
 			Object principal = authentication.getPrincipal();
 			if(principal !=null && principal instanceof Student) {
-				return true;
+				return (Student)principal;
 			}
 		}
-		return  false;
-	}
-	
-	public static long getStudentId() {
-		Student student = getPrincipal();
-		return student.getStudentId();
-	}
-
-	private static Student getPrincipal() {
-		Student student = (Student) getAuthentication().getPrincipal();
-		return student;
+		return null;
 	}
 
 	private static Authentication getAuthentication() {

@@ -74,7 +74,7 @@ public class PortalController {
     @GetMapping({ "/profile"})
     public String profilePortalPage(Model model) {
     	long studentId =  AuthenticateUtil.getStudentId();
-        model.addAttribute("student", studentServiceIfc.getStudentById(Long.valueOf(studentId)));
+        model.addAttribute("student", studentServiceIfc.getStudentByIdWithoutPassword(Long.valueOf(studentId)));
         return "/view_and_update-student-profile";
     }
 

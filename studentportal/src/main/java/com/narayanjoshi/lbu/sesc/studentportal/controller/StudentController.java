@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.narayanjoshi.lbu.sesc.studentportal.constant.Endpoint;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Student;
-import com.narayanjoshi.lbu.sesc.studentportal.dto.ResponseDTO;
 import com.narayanjoshi.lbu.sesc.studentportal.exception.AuthenticationException;
 import com.narayanjoshi.lbu.sesc.studentportal.service.StudentServiceIfc;
 import com.narayanjoshi.lbu.sesc.studentportal.utils.AuthenticateUtil;
@@ -27,37 +26,43 @@ import com.narayanjoshi.lbu.sesc.studentportal.utils.AuthenticateUtil;
 @RequestMapping(value = Endpoint.ROOT_API_V1 + Endpoint.STUDENT_URI)
 public class StudentController {
 
-    private StudentServiceIfc studentServiceIfc;
+	private StudentServiceIfc studentServiceIfc;
 
-    StudentController(StudentServiceIfc  studentServiceIfc){
-        this.studentServiceIfc = studentServiceIfc;
-    }
-    
-    @GetMapping("/login")
-    public @ResponseBody ResponseEntity<ResponseDTO> loginApi(@RequestBody Student student, HttpServletRequest request){
-    	try {
-    	    request.login(student.getUsername(), student.getPassword());
-    	  } catch (ServletException e) {
-    	    throw new AuthenticationException("Invalid username or password");
-    	  }
+	StudentController(StudentServiceIfc studentServiceIfc) {
+		this.studentServiceIfc = studentServiceIfc;
+	}
 
-    	Map<String, Object> responseMap = new HashMap<>();
-    	responseMap.put("student_id", AuthenticateUtil.getStudentId());
-        return new ResponseEntity<ResponseDTO>(new ResponseDTO(responseMap), HttpStatus.OK);
-    }
+	@GetMapping("/login")
+	public @ResponseBody ResponseEntity loginApi(@RequestBody Student student, HttpServletRequest request) {
+		
+		if(!AuthenticateUtil.isAuthenticate()) {
+			try {
+				request.login(student.getUsername(), student.getPassword());
+			} catch (ServletException e) {
+				throw new AuthenticationException("Invalid username or password");
+			}
+		}
+		
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("student_id", AuthenticateUtil.getStudentId());
+		return new ResponseEntity<>(responseMap, HttpStatus.OK);
+	}
 
-    @GetMapping
-    public @ResponseBody ResponseEntity<ResponseDTO> getStudent(){
-        return new ResponseEntity<ResponseDTO>(new ResponseDTO(null), HttpStatus.OK);
-    }
+	@GetMapping
+	public @ResponseBody ResponseEntity getStudent() {
+		Student student = studentServiceIfc.getStudentByIdWithoutPassword(AuthenticateUtil.getStudentId());
+		return new ResponseEntity<>(student, HttpStatus.OK);
+	}
 
-    @PostMapping
-    public @ResponseBody ResponseEntity<ResponseDTO> registerStudent(){
-        return new ResponseEntity<ResponseDTO>(new ResponseDTO(null), HttpStatus.OK);
-    }
+	@PostMapping("/register")
+	public @ResponseBody ResponseEntity registerStudent(@RequestBody Student student) {
+		studentServiceIfc.createStudent(student);
+		return new ResponseEntity<>(null, HttpStatus.OK);
+	}
 
-    @PutMapping
-    public @ResponseBody ResponseEntity<ResponseDTO> updateStudent(){
-        return new ResponseEntity<ResponseDTO>(new ResponseDTO(null), HttpStatus.OK);
-    }
+	@PutMapping
+	public @ResponseBody ResponseEntity updateStudent(@RequestBody Student student) {
+		studentServiceIfc.updateStudent(student);
+		return new ResponseEntity<>(null, HttpStatus.OK);
+	}
 }

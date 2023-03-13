@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,16 +21,20 @@ import lombok.Setter;
 @Table(name = "course")
 public class Course extends Common{
 	
-	@Column(name = "course_id", unique = true)
+	@JsonProperty("course_id")
+	@Column(name = "course_id", unique = true, nullable = false)
     private String courseId;
 
-    @Column(name = "title")
+	@JsonProperty("title")
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "description", length = 1000)
+	@JsonProperty("description")
+    @Column(name = "description", length = 1000, nullable = false)
     private String description;
     
-    @Column(name = "fee")
+	@JsonProperty("fee")
+    @Column(name = "fee", nullable = false)
     private BigDecimal fee;
 
     

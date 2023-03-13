@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.narayanjoshi.lbu.sesc.studentportal.constant.IntakeEnum;
 
 import lombok.AllArgsConstructor;
@@ -27,20 +28,23 @@ import lombok.ToString;
 @Table(name = "enroll")
 public class Enroll  extends Common{
 
-    @Column(name = "student_id")
+	@JsonProperty("student_id")
+    @Column(name = "student_id", nullable = false)
     private long studentId;
 
-    @Column(name = "intake")
+	@JsonProperty("intake")
+    @Column(name = "intake", nullable = false)
     @Enumerated(EnumType.STRING)
     private IntakeEnum intake;
-    @Column(name = "date")
+    
+	@JsonProperty("enroll_date")
+    @Column(name = "date", nullable = false)
     private LocalDateTime date;
 
+	@JsonProperty("course")
     @OneToOne
-    @JoinColumn(name="course_id",referencedColumnName="course_id")
+    @JoinColumn(name="course_id",referencedColumnName="course_id", nullable = false)
     @ToString.Exclude
     private Course course = new Course();
-    
-    @Transient
-    private String courseId;
+
 }
