@@ -32,6 +32,10 @@ public class CourseController {
     public @ResponseBody ResponseEntity getCourses(){
        List<Course> courseList = this.courseServiceIfc.findAllCourse();
        
+       for(Course course: courseList) {
+    	   course.add(linkTo(methodOn(EnrollmentController.class).enrollIntoCourse(course.getCourseId())).withRel("enroll_into_course"));
+       }
+       
        CollectionModel<Course> collectionModel= CollectionModel.of(courseList);
        collectionModel.add(linkTo(methodOn(CourseController.class).getCourses()).withSelfRel());
        collectionModel.add(linkTo(methodOn(CourseController.class).searchCourses("search_keyword")).withRel("search"));
@@ -41,6 +45,10 @@ public class CourseController {
     @GetMapping(value = Endpoint.SEARCH_COURSE_URI)
     public @ResponseBody ResponseEntity searchCourses(@RequestParam String title){
         List<Course> courseList = this.courseServiceIfc.searchCourses(title);
+        
+        for(Course course: courseList) {
+     	   course.add(linkTo(methodOn(EnrollmentController.class).enrollIntoCourse(course.getCourseId())).withRel("enroll_into_course"));
+        }
         
         CollectionModel<Course> collectionModel= CollectionModel.of(courseList);
         collectionModel.add(linkTo(methodOn(CourseController.class).searchCourses(title)).withSelfRel());

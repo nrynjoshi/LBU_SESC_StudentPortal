@@ -22,6 +22,9 @@ import com.narayanjoshi.lbu.sesc.studentportal.exception.AuthenticationException
 import com.narayanjoshi.lbu.sesc.studentportal.service.StudentServiceIfc;
 import com.narayanjoshi.lbu.sesc.studentportal.utils.AuthenticateUtil;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;;
+
 @RestController
 @RequestMapping(value = Endpoint.ROOT_API_V1 + Endpoint.STUDENT_URI)
 public class StudentController {
@@ -33,30 +36,41 @@ public class StudentController {
 	}
 
 	@PostMapping("/login")
-	public @ResponseBody ResponseEntity loginApi(@RequestBody Student student, HttpServletRequest request) {
+	public @ResponseBody ResponseEntity loginApi(@RequestBody Student studentLogin) {
 		
 		if(!AuthenticateUtil.isAuthenticate()) {
 			try {
-				request.login(student.getUsername(), student.getPassword());
+				AuthenticateUtil.getHttpServletRequest().login(studentLogin.getUsername(), studentLogin.getPassword());
 			} catch (ServletException e) {
 				throw new AuthenticationException("Invalid username or password");
 			}
 		}
 		
-		Map<String, Object> responseMap = new HashMap<>();
-		responseMap.put("student_id", AuthenticateUtil.getStudentId());
-		return new ResponseEntity<>(responseMap, HttpStatus.OK);
+		Student student = new Student();
+		student.setStudentId(AuthenticateUtil.getStudentId());
+		
+		student.add(linkTo(methodOn(StudentController.class).getStudent()).withRel("get_profile"));
+		student.add(linkTo(methodOn(StudentController.class).updateStudent(new Student())).withRel("update_profile"));
+		student.add(linkTo(methodOn(EnrollmentController.class).getEnrollments()).withRel("my_enrollments"));
+		student.add(linkTo(methodOn(CourseController.class).getCourses()).withRel("courses"));
+		
+		return new ResponseEntity<>(student, HttpStatus.OK);
 	}
 
 	@GetMapping
 	public @ResponseBody ResponseEntity getStudent() {
 		Student student = studentServiceIfc.getStudentByIdWithoutPassword(AuthenticateUtil.getStudentId());
+		student.add(linkTo(methodOn(StudentController.class).updateStudent(new Student())).withRel("update_profile"));
 		return new ResponseEntity<>(student, HttpStatus.OK);
 	}
 
 	@PostMapping("/register")
-	public @ResponseBody ResponseEntity registerStudent(@RequestBody Student student) {
-		studentServiceIfc.createStudent(student);
+	public @ResponseBody ResponseEntity registerStudent(@RequestBody Student studentRegister) {
+		studentServiceIfc.createStudent(studentRegister);
+		
+		Student student = new Student();
+		student.add(linkTo(methodOn(StudentController.class).loginApi(new Student())).withRel("login"));
+		
 		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
 

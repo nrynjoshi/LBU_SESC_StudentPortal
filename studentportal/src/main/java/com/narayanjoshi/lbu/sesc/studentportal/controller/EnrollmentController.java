@@ -10,7 +10,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.narayanjoshi.lbu.sesc.studentportal.constant.Endpoint;
+import com.narayanjoshi.lbu.sesc.studentportal.domain.Enroll;
 import com.narayanjoshi.lbu.sesc.studentportal.service.EnrollServiceIfc;
+
+import java.util.List;
+
+import org.springframework.hateoas.CollectionModel;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(value = Endpoint.ROOT_API_V1 + Endpoint.ENROLLMENT_URI)
@@ -24,7 +31,12 @@ public class EnrollmentController {
 
     @GetMapping
     public @ResponseBody ResponseEntity getEnrollments(){
-        return new ResponseEntity<>(enrollServiceIfc.getEnrolCourses(), HttpStatus.OK);
+    	
+    	List<Enroll> enrolCourses = enrollServiceIfc.getEnrolCourses();
+    	CollectionModel<Enroll> collectionModel = CollectionModel.of(enrolCourses);
+    	collectionModel.add(linkTo(methodOn(EnrollmentController.class).getEnrollments()).withSelfRel());
+    	
+        return new ResponseEntity<>(collectionModel, HttpStatus.OK);
     }
 
     @PostMapping

@@ -9,8 +9,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.narayanjoshi.lbu.sesc.studentportal.constant.IntakeEnum;
 
@@ -25,6 +26,7 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(Include.NON_DEFAULT)
 @Table(name = "enroll")
 public class Enroll  extends Common{
 

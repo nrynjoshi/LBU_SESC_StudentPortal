@@ -89,7 +89,7 @@ public class StudentServiceImpl implements StudentServiceIfc {
 	@Override
     public Student getStudentByIdWithoutPassword(long studentId){
 		Student student = getStudentById(studentId);
-        student.setPassword("");
+        student.setPassword(null);
         return student;
     }
     
