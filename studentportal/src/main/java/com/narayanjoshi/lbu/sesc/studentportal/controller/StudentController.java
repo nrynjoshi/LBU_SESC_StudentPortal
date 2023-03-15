@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ import com.narayanjoshi.lbu.sesc.studentportal.constant.Endpoint;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Student;
 import com.narayanjoshi.lbu.sesc.studentportal.exception.AuthenticationException;
 import com.narayanjoshi.lbu.sesc.studentportal.service.StudentServiceIfc;
+import com.narayanjoshi.lbu.sesc.studentportal.service.assembler.StudentModelAssembler;
 import com.narayanjoshi.lbu.sesc.studentportal.utils.AuthenticateUtil;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -30,6 +32,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class StudentController {
 
 	private StudentServiceIfc studentServiceIfc;
+	
+	@Autowired
+	public StudentModelAssembler studentModelAssembler;
 
 	StudentController(StudentServiceIfc studentServiceIfc) {
 		this.studentServiceIfc = studentServiceIfc;
@@ -48,13 +53,7 @@ public class StudentController {
 		
 		Student student = new Student();
 		student.setStudentId(AuthenticateUtil.getStudentId());
-		
-		student.add(linkTo(methodOn(StudentController.class).getStudent()).withRel("get_profile"));
-		student.add(linkTo(methodOn(StudentController.class).updateStudent(new Student())).withRel("update_profile"));
-		student.add(linkTo(methodOn(EnrollmentController.class).getEnrollments()).withRel("my_enrollments"));
-		student.add(linkTo(methodOn(CourseController.class).getCourses()).withRel("courses"));
-		
-		return new ResponseEntity<>(student, HttpStatus.OK);
+		return new ResponseEntity<>(studentModelAssembler.toModel(student), HttpStatus.OK);
 	}
 
 	@GetMapping
