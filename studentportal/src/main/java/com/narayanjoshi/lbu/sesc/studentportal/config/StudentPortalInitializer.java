@@ -1,14 +1,14 @@
 package com.narayanjoshi.lbu.sesc.studentportal.config;
 
-import com.narayanjoshi.lbu.sesc.studentportal.constant.LectureTypeEnum;
-import com.narayanjoshi.lbu.sesc.studentportal.domain.Course;
-import com.narayanjoshi.lbu.sesc.studentportal.service.CourseServiceIfc;
+import java.math.BigDecimal;
+import java.util.List;
+
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalTime;
-import java.util.List;
+import com.narayanjoshi.lbu.sesc.studentportal.domain.Course;
+import com.narayanjoshi.lbu.sesc.studentportal.service.CourseServiceIfc;
 
 @Component
 public class StudentPortalInitializer {
@@ -28,31 +28,32 @@ public class StudentPortalInitializer {
     private void loadCourse() {
        List<Course> courseList = courseServiceIfc.findAllCourse();
        if(courseList.isEmpty()){
-           Course cloudComputingCourse= new Course("Cloud Computing Development", "Software engineering course", "John", "JG001", LectureTypeEnum.PHYSICAL, LocalTime.of(00,00), LocalTime.of(00,00), "COMP637");
+
+           Course cloudComputingCourse= new Course("COMP637", "Cloud Computing Development", "Cloud development simply means writing code in the cloud, or on a local machine directly connected to the cloud environment, to where it is transferred for testing. Cloud development requires only a browser or online interface that is connected to a cloud-based infrastructure.", new BigDecimal(350.00) );
            this.courseServiceIfc.createCourse(cloudComputingCourse);
 
-           Course databaseCourse= new Course("Database Systems", "Software engineering course", "John", null, LectureTypeEnum.RECORDED,LocalTime.of(00,00), LocalTime.of(00,00), "COMP712");
+           Course databaseCourse= new Course("COMP712", "Database Systems", "Database Systems or DBMS is software that caters to the collection of electronic and digital records to extract useful information and store that information is known as Database Systems/ Database Management Systems or DBMS. The purpose of a standard database is to store and retrieve data.", new BigDecimal(230.30));
            this.courseServiceIfc.createCourse(databaseCourse);
 
-           Course advanceSoftwareCourse= new Course("Advanced Software Engineering", "Software engineering course", "John", "JG005", LectureTypeEnum.PHYSICAL,LocalTime.of(00,00), LocalTime.of(00,00), "COMP725");
+           Course advanceSoftwareCourse= new Course("COMP725", "Advanced Software Engineering", "An advanced software engineer uses high-level programming skills and technical expertise to design, execute, and assess software programs. They focus on the organizational structure of the project and typically set the time frame for the program's completion.", new BigDecimal(350.00));
            this.courseServiceIfc.createCourse(advanceSoftwareCourse);
 
-           Course researchCourse= new Course("Research Practice", "Research course", "John", null, LectureTypeEnum.ONLINE,LocalTime.of(00,00), LocalTime.of(00,00), "COMP738");
+           Course researchCourse= new Course("COMP738", "Research Practice", "Practice-research is a methodology in which knowledge is gained via the doing of something, rather than reading about it (desk-research), or inquiring into what other people know about that thing (i.e., interviews, surveys, etc.) or other more traditional models of research such as case studies and ethnographies.", new BigDecimal(480.50));
            this.courseServiceIfc.createCourse(researchCourse);
 
-           Course projectCourse= new Course("Project Management", "Management course", "John", "JG012 Computer Lab", LectureTypeEnum.PHYSICAL,LocalTime.of(00,00), LocalTime.of(00,00), "COMP753");
+           Course projectCourse= new Course("COMP753", "Project Management", "Project management is the process of leading the work of a team to achieve all project goals within the given constraints. This information is usually described in project documentation, created at the beginning of the development process. The primary constraints are scope, time, and budget.", new BigDecimal(360.00));
            this.courseServiceIfc.createCourse(projectCourse);
 
-           Course serviceComputingCourse= new Course("Software Engineering for Service Computing", "Service computing course", "John", null, LectureTypeEnum.ONLINE,LocalTime.of(00,00), LocalTime.of(00,00), "COMP758");
+           Course serviceComputingCourse= new Course("COMP758", "Software Engineering for Service Computing", "Software engineering is the branch of computer science that deals with the design, development, testing, and maintenance of software applications. Software engineers apply engineering principles and knowledge of programming languages to build software solutions for end users.", new BigDecimal(615.00));
            this.courseServiceIfc.createCourse(serviceComputingCourse);
 
-           Course dissertationCourse= new Course("Msc Dissertation", "Dissertation course", "John", null, LectureTypeEnum.ONLINE,LocalTime.of(00,00), LocalTime.of(00,00), "COMP763");
+           Course dissertationCourse= new Course("COMP763", "Msc Dissertation", "A Masters Dissertation is a lengthy written study on a topic chosen by the student. It is undertaken with the guidance of a faculty supervisor, and involves an extended period of research and writing.", new BigDecimal(550.00));
            this.courseServiceIfc.createCourse(dissertationCourse);
 
-           Course softwareCourse= new Course("Software And System", "IOT course", "John", "JG001", LectureTypeEnum.PHYSICAL,LocalTime.of(00,00), LocalTime.of(00,00), "COMP703");
+           Course softwareCourse= new Course("COMP703", "Software And System", "System software is a program designed to run a computer's hardware and applications and manage its resources, such as its memory, processors, and devices. It also provides a platform for running application software, and system software is typically bundled with a computer's operating system.", new BigDecimal(200.18));
            this.courseServiceIfc.createCourse(softwareCourse);
 
-           Course datawareHourseCourse= new Course("Data ware house", "Big data course", "John", "JG001", LectureTypeEnum.PHYSICAL,LocalTime.of(00,00), LocalTime.of(00,00), "COMP713");
+           Course datawareHourseCourse= new Course("COMP713", "Data ware house", "A data warehouse is a type of data management system that is designed to enable and support business intelligence (BI) activities, especially analytics. Data warehouses are solely intended to perform queries and analysis and often contain large amounts of historical data.", new BigDecimal(700.12));
            this.courseServiceIfc.createCourse(datawareHourseCourse);
        }
     }

@@ -5,3 +5,4 @@
 - Is other service run within our system and connection by student portal?
 - Can we use personal or student email for docker sign?
 - Is there any authentication/security is need or just any simple i.e. cookies to track login.
+- Do we need to store invoice reference ourself or there is some API?

@@ -1,1 +1,8 @@
-body{background: #000}.card{border: none;height: 320px}
+.main{
+	margin-top: 60px;
+}
+
+.copyright {
+    font-size: 80%;
+    line-height: 1.4em;
+}

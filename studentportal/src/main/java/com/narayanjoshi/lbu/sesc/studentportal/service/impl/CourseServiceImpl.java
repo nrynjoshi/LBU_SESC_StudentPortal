@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 public class CourseServiceImpl implements CourseServiceIfc {
 
     private CourseRepositoryIfc courseRepositoryIfc;
@@ -30,7 +29,7 @@ public class CourseServiceImpl implements CourseServiceIfc {
 
     @Override
     public List<Course> searchCourses(String name){
-        return courseRepositoryIfc.findByName(name);
+        return courseRepositoryIfc.searchByTitleKeyword(name);
     }
 
 

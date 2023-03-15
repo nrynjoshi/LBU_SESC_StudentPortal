@@ -1,15 +1,21 @@
 package com.narayanjoshi.lbu.sesc.studentportal.service;
 
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Student;
+import com.narayanjoshi.lbu.sesc.studentportal.exception.AuthenticationException;
 
 public interface StudentServiceIfc {
-    long loginStudent(Student student) throws Exception;
 
     void createStudent(Student student);
 
     void updateStudent(Student student);
 
-    Student getStudentById(long studentId);
+//    Student getStudentById(long studentId);
 
-    boolean getGraduation(long studentId);
+	Student loginStudent(String username, String password) throws AuthenticationException;
+
+	boolean isEligibleGraduation();
+
+	Student getStudentByIdWithoutPassword(long studentId);
+
+	Student getStudentById(long studentId);
 }
