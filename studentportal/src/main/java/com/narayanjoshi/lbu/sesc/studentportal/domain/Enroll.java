@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -27,7 +28,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(Include.NON_DEFAULT)
-@Table(name = "enroll")
+@Table(name = "enroll", uniqueConstraints = { @UniqueConstraint(name = "uq_StudentAndCourseEnrollment", columnNames = { "student_id", "course_id" }) })
 public class Enroll  extends Common{
 
 	@JsonProperty("student_id")
