@@ -4,32 +4,26 @@ This is a simple microservices-based application which exposes a RESTful API. It
 ![component diagram](src/main/resources/static/student-portal.png "Component Diagram")
 
 ## Features
-1. Create Account - create a finance account by passing a student ID.
-2. Query Account - find a finance account by passing a student ID. The response shows whether the account has an outstanding balance.
-3. View Invoice - view all invoices or a single invoice, by invoice ID.
-4. Create Invoice - create a new outstanding invoice by passing a student ID.
-5. Pay Invoice - pay an outstanding invoice.
-6. Cancel Invoice - cancel an outstanding invoice.
+1. Register/Log in - create a student account and login to system.
+2. View Courses - find all available courses.
+3. Enrol in Course - - you can enroll into all available courses.
+4. View Enrolments - view all enroll courses.
+5. View/Update Student Profile - you can view and update your student basic profile.
+6. Graduation - you can graduate.
 
 ## Integrations
 ### 1. Database
 The application integrates with a MYSQL database.</br>
-Scripts to create the database schema can be found in the migrations folder and are run automatically by docker-compose.
 
-## Run using Docker Compose
-1. Rename the `.env.example` file inside the `finance` directory to `.env`:<br/>
-2. From the `finance` directory, run the app and db services:<br/>
-   `docker-compose up`
+## Run using mvn co
+1. Run using mvn spring-boot:run
 
 ## Test using Postman
-Download Postman from https://www.postman.com/ and import the collections found in the `finance/postman` directory.
+Download Postman from https://www.postman.com/ and import the collections found in the `student/postman` directory.
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-Please make sure to update tests as appropriate.
 
 ## License
-Copyright (c) 2021 Thalita Vergilio
+Copyright (c) 2023 Narayan Joshi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
