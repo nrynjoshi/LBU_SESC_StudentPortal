@@ -6,6 +6,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import java.util.List;
 
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +53,7 @@ public class CourseController {
         
         CollectionModel<Course> collectionModel= CollectionModel.of(courseList);
         collectionModel.add(linkTo(methodOn(CourseController.class).searchCourses(title)).withSelfRel());
-        collectionModel.add(linkTo(methodOn(CourseController.class).getCourses()).withRel("courses"));
+        collectionModel.add(linkTo(methodOn(CourseController.class).getCourses()).withRel(IanaLinkRelations.COLLECTION));
         return new ResponseEntity<>(collectionModel, HttpStatus.OK);
     }
 
