@@ -52,14 +52,14 @@ public class StudentController {
 		student.add(linkTo(methodOn(EnrollmentController.class).getEnrollments()).withRel("my_enrollments"));
 		student.add(linkTo(methodOn(CourseController.class).getCourses()).withRel("all_courses"));
 		
-		return new ResponseEntity<>(student, HttpStatus.OK);
+		return ResponseEntity.status(HttpStatus.OK).body(student);
 	}
 
 	@GetMapping
 	public @ResponseBody ResponseEntity getStudent() {
 		Student student = studentServiceIfc.getStudentByIdWithoutPassword(AuthenticateUtil.getStudentId());
 		student.add(linkTo(methodOn(StudentController.class).updateStudent(new Student())).withRel("update_profile"));
-		return new ResponseEntity<>(student, HttpStatus.OK);
+		return ResponseEntity.status(HttpStatus.OK).body(student);
 	}
 
 	@PostMapping("/register")
@@ -69,12 +69,12 @@ public class StudentController {
 		Student student = new Student();
 		student.add(linkTo(methodOn(StudentController.class).loginApi(new Student())).withRel("login"));
 		
-		return new ResponseEntity<>(null, HttpStatus.OK);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
 	@PutMapping
 	public @ResponseBody ResponseEntity updateStudent(@RequestBody Student student) {
 		studentServiceIfc.updateStudent(student);
-		return new ResponseEntity<>(null, HttpStatus.OK);
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 }

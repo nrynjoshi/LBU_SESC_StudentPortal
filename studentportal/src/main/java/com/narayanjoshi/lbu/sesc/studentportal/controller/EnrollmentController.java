@@ -36,13 +36,13 @@ public class EnrollmentController {
     	CollectionModel<Enroll> collectionModel = CollectionModel.of(enrolCourses);
     	collectionModel.add(linkTo(methodOn(EnrollmentController.class).getEnrollments()).withSelfRel());
     	
-        return new ResponseEntity<>(collectionModel, HttpStatus.OK);
+    	return ResponseEntity.status(HttpStatus.OK).body(collectionModel);
     }
 
     @PostMapping
     public @ResponseBody ResponseEntity enrollIntoCourse(@RequestParam("course_id") String courseId){
     	enrollServiceIfc.enrolIntoCourse(courseId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 

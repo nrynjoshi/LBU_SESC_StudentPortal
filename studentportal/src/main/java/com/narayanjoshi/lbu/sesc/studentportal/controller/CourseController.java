@@ -40,7 +40,7 @@ public class CourseController {
        CollectionModel<Course> collectionModel= CollectionModel.of(courseList);
        collectionModel.add(linkTo(methodOn(CourseController.class).getCourses()).withSelfRel());
        collectionModel.add(linkTo(methodOn(CourseController.class).searchCourses("search_keyword")).withRel("search"));
-       return new ResponseEntity<>(collectionModel, HttpStatus.OK);
+       return ResponseEntity.status(HttpStatus.OK).body(collectionModel);
     }
 
     @GetMapping(value = Endpoint.SEARCH_COURSE_URI)
@@ -54,7 +54,7 @@ public class CourseController {
         CollectionModel<Course> collectionModel= CollectionModel.of(courseList);
         collectionModel.add(linkTo(methodOn(CourseController.class).searchCourses(title)).withSelfRel());
         collectionModel.add(linkTo(methodOn(CourseController.class).getCourses()).withRel(IanaLinkRelations.COLLECTION));
-        return new ResponseEntity<>(collectionModel, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(collectionModel);
     }
 
 }
