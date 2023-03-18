@@ -2,7 +2,6 @@ package com.narayanjoshi.lbu.sesc.studentportal.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,89 +22,93 @@ import com.narayanjoshi.lbu.sesc.studentportal.utils.AuthenticateUtil;
 @RequestMapping("")
 public class PortalController {
 
-    @Autowired private CourseServiceIfc courseServiceIfc;
+	private CourseServiceIfc courseServiceIfc;
 
-    @Autowired private EnrollServiceIfc enrollServiceIfc;
+	private EnrollServiceIfc enrollServiceIfc;
 
-    @Autowired private StudentServiceIfc studentServiceIfc;
+	private StudentServiceIfc studentServiceIfc;
 
-    @GetMapping("/")
-    public String redirectToLogin(){
-        return "redirect:/login";
-    }
+	PortalController(CourseServiceIfc courseServiceIfc, EnrollServiceIfc enrollServiceIfc,
+			StudentServiceIfc studentServiceIfc) {
+		this.courseServiceIfc = courseServiceIfc;
+		this.enrollServiceIfc = enrollServiceIfc;
+		this.studentServiceIfc = studentServiceIfc;
+	}
 
-    @GetMapping({ "login"})
-    public String login(Model model) {
-    	if(AuthenticateUtil.isAuthenticate()) {
-    		 return "redirect:/dashboard";
-    	}
-        model.addAttribute("student", new Student());
-        return "index";
-    }
+	@GetMapping("/")
+	public String redirectToLogin() {
+		return "redirect:/login";
+	}
 
+	@GetMapping({ "login" })
+	public String login(Model model) {
+		if (AuthenticateUtil.isAuthenticate()) {
+			return "redirect:/dashboard";
+		}
+		model.addAttribute("student", new Student());
+		return "index";
+	}
 
-    @GetMapping({ "/dashboard"})
-    public String dashboardPortalPage(Model model) {
-        model.addAttribute("student", new Student());
-        return "dashboard";
-    }
+	@GetMapping({ "/dashboard" })
+	public String dashboardPortalPage(Model model) {
+		model.addAttribute("student", new Student());
+		return "dashboard";
+	}
 
-    @GetMapping({ "/register"})
-    public String registerPortalPage(Model model) {
-        model.addAttribute("student", new Student());
-        return "/register";
-    }
+	@GetMapping({ "/register" })
+	public String registerPortalPage(Model model) {
+		model.addAttribute("student", new Student());
+		return "/register";
+	}
 
-    @PostMapping({ "/register"})
-    public String registerPortalSubmit(@ModelAttribute Student student, RedirectAttributes redirectAttributes) {
-        studentServiceIfc.createStudent(student);
-        redirectAttributes.addFlashAttribute("message", "success");
-        return "redirect:/login";
-    }
+	@PostMapping({ "/register" })
+	public String registerPortalSubmit(@ModelAttribute Student student, RedirectAttributes redirectAttributes) {
+		studentServiceIfc.createStudent(student);
+		redirectAttributes.addFlashAttribute("message", "success");
+		return "redirect:/login";
+	}
 
-    @GetMapping({ "/courses"})
-    public String viewCourse(Model model) {
-        model.addAttribute("courses", courseServiceIfc.findAllCourse());
-        return "view-courses-and-enrol";
-    }
+	@GetMapping({ "/courses" })
+	public String viewCourse(Model model) {
+		model.addAttribute("courses", courseServiceIfc.findAllCourse());
+		return "view-courses-and-enrol";
+	}
 
+	@GetMapping({ "/profile" })
+	public String profilePortalPage(Model model) {
+		long studentId = AuthenticateUtil.getStudentId();
+		model.addAttribute("student", studentServiceIfc.getStudentByIdWithoutPassword(Long.valueOf(studentId)));
+		return "/view_and_update-student-profile";
+	}
 
+	@PostMapping({ "/profile" })
+	public String profilePortalSubmit(@ModelAttribute Student student, RedirectAttributes redirectAttributes) {
 
-    @GetMapping({ "/profile"})
-    public String profilePortalPage(Model model) {
-    	long studentId =  AuthenticateUtil.getStudentId();
-        model.addAttribute("student", studentServiceIfc.getStudentByIdWithoutPassword(Long.valueOf(studentId)));
-        return "/view_and_update-student-profile";
-    }
+		studentServiceIfc.updateStudent(student);
+		return "redirect:/profile";
+	}
 
-    @PostMapping({ "/profile"})
-    public String profilePortalSubmit(@ModelAttribute Student student, RedirectAttributes redirectAttributes) {
+	@GetMapping({ "/graduation" })
+	public String graduationPortalPage(Model model) {
+		model.addAttribute("is_eligible_graduated", studentServiceIfc.isEligibleGraduation());
+		return "/graduation";
+	}
 
-        studentServiceIfc.updateStudent(student);
-        return "redirect:/profile";
-    }
+	@GetMapping({ "/logout" })
+	public String logout(Model model) {
+		return "redirect:/login";
+	}
 
-    @GetMapping({ "/graduation"})
-    public String graduationPortalPage(Model model) {
-        model.addAttribute("is_eligible_graduated", studentServiceIfc.isEligibleGraduation());
-        return "/graduation";
-    }
+	@GetMapping({ "/enrol/{course_id}" })
+	public String enrollIntoCourse(@PathVariable("course_id") String course_id) {
+		enrollServiceIfc.enrolIntoCourse(course_id);
+		return "redirect:/enrollments";
+	}
 
-    @GetMapping({ "/logout"})
-    public String logout(Model model) {
-        return "redirect:/login";
-    }
-
-    @GetMapping({ "/enrol/{course_id}"})
-    public String enrollIntoCourse(@PathVariable("course_id") String course_id) {
-        enrollServiceIfc.enrolIntoCourse(course_id);
-        return "redirect:/enrollments";
-    }
-
-    @GetMapping({ "/enrollments"})
-    public String enrollments(Model model) {
-        List<Enroll> enrolCourses = enrollServiceIfc.getEnrolCourses();
+	@GetMapping({ "/enrollments" })
+	public String enrollments(Model model) {
+		List<Enroll> enrolCourses = enrollServiceIfc.getEnrolCourses();
 		model.addAttribute("enrollments", enrolCourses);
-        return "view-enrollments";
-    }
+		return "view-enrollments";
+	}
 }

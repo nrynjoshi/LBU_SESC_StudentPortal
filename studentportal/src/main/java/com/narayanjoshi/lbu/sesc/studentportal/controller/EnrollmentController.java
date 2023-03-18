@@ -1,5 +1,11 @@
 package com.narayanjoshi.lbu.sesc.studentportal.controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import java.util.List;
+
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,37 +19,30 @@ import com.narayanjoshi.lbu.sesc.studentportal.constant.Endpoint;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Enroll;
 import com.narayanjoshi.lbu.sesc.studentportal.service.EnrollServiceIfc;
 
-import java.util.List;
-
-import org.springframework.hateoas.CollectionModel;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 @RestController
 @RequestMapping(value = Endpoint.ROOT_API_V1 + Endpoint.ENROLLMENT_URI)
 public class EnrollmentController {
 
-    private EnrollServiceIfc enrollServiceIfc;
+	private EnrollServiceIfc enrollServiceIfc;
 
-    EnrollmentController(EnrollServiceIfc  enrollServiceIfc){
-        this.enrollServiceIfc = enrollServiceIfc;
-    }
+	EnrollmentController(EnrollServiceIfc enrollServiceIfc) {
+		this.enrollServiceIfc = enrollServiceIfc;
+	}
 
-    @GetMapping
-    public @ResponseBody ResponseEntity getEnrollments(){
-    	
-    	List<Enroll> enrolCourses = enrollServiceIfc.getEnrolCourses();
-    	CollectionModel<Enroll> collectionModel = CollectionModel.of(enrolCourses);
-    	collectionModel.add(linkTo(methodOn(EnrollmentController.class).getEnrollments()).withSelfRel());
-    	
-    	return ResponseEntity.status(HttpStatus.OK).body(collectionModel);
-    }
+	@GetMapping
+	public @ResponseBody ResponseEntity<CollectionModel<Enroll>> getEnrollments() {
 
-    @PostMapping
-    public @ResponseBody ResponseEntity enrollIntoCourse(@RequestParam("course_id") String courseId){
-    	enrollServiceIfc.enrolIntoCourse(courseId);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
+		List<Enroll> enrolCourses = enrollServiceIfc.getEnrolCourses();
+		CollectionModel<Enroll> collectionModel = CollectionModel.of(enrolCourses);
+		collectionModel.add(linkTo(methodOn(EnrollmentController.class).getEnrollments()).withSelfRel());
 
+		return ResponseEntity.status(HttpStatus.OK).body(collectionModel);
+	}
+
+	@PostMapping
+	public @ResponseBody ResponseEntity enrollIntoCourse(@RequestParam("course_id") String courseId) {
+		enrollServiceIfc.enrolIntoCourse(courseId);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
 
 }

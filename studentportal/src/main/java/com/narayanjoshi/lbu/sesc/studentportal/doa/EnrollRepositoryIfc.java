@@ -11,6 +11,7 @@ import com.narayanjoshi.lbu.sesc.studentportal.domain.Enroll;
 @Repository
 public interface EnrollRepositoryIfc extends JpaRepository<Enroll, Long> {
 
-    List<Enroll> findByStudentId(Long studentId);
-    Enroll findByStudentIdAndCourse(Long studentId, Course course);
+	List<Enroll> findByStudentId(Long studentId);
+
+	Enroll findByStudentIdAndCourse(Long studentId, Course course);
 }

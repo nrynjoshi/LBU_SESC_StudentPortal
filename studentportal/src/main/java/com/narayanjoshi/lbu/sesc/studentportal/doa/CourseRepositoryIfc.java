@@ -10,10 +10,10 @@ import java.util.List;
 
 @Repository
 public interface CourseRepositoryIfc extends JpaRepository<Course, Long> {
-	
+
 	@Query("FROM Course WHERE title LIKE %:title%")
 	@Modifying
-    List<Course> searchByTitleKeyword(String title);
-	
-    Course findByCourseId(String courseId);
+	List<Course> searchByTitleKeyword(String title);
+
+	Course findByCourseId(String courseId);
 }

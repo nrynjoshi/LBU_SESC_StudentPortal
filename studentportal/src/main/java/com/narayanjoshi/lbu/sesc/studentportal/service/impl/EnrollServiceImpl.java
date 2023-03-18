@@ -1,14 +1,8 @@
 package com.narayanjoshi.lbu.sesc.studentportal.service.impl;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.narayanjoshi.lbu.sesc.studentportal.constant.IntakeEnum;
@@ -18,22 +12,24 @@ import com.narayanjoshi.lbu.sesc.studentportal.domain.Course;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Enroll;
 import com.narayanjoshi.lbu.sesc.studentportal.service.EnrollServiceIfc;
 import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.constant.PaymentType;
-import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.constant.ThirdPartyEndpoint;
 import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.service.ThirdPartyAPIServiceIfc;
-import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.util.HttpUtil;
 import com.narayanjoshi.lbu.sesc.studentportal.utils.AuthenticateUtil;
 
 @Service
 public class EnrollServiceImpl implements EnrollServiceIfc {
 
-	@Autowired
 	private EnrollRepositoryIfc enrollRepositoryIfc;
 
-	@Autowired
 	private CourseRepositoryIfc courseRepositoryIfc;
 
-	@Autowired
 	private ThirdPartyAPIServiceIfc thirdPartyAPIServiceIfc;
+
+	EnrollServiceImpl(EnrollRepositoryIfc enrollRepositoryIfc, CourseRepositoryIfc courseRepositoryIfc,
+			ThirdPartyAPIServiceIfc thirdPartyAPIServiceIfc) {
+		this.enrollRepositoryIfc = enrollRepositoryIfc;
+		this.courseRepositoryIfc = courseRepositoryIfc;
+		this.thirdPartyAPIServiceIfc = thirdPartyAPIServiceIfc;
+	}
 
 	@Override
 	public List<Enroll> getEnrolCourses() {
@@ -60,12 +56,5 @@ public class EnrollServiceImpl implements EnrollServiceIfc {
 		}
 
 	}
-
-	/**
-	 * When you enrol in a course, a request is sent to the Finance microservice to
-	 * create an invoice.
-	 * 
-	 * @param studentId
-	 */
 
 }

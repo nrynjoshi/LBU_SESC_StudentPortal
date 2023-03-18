@@ -26,49 +26,47 @@ import com.narayanjoshi.lbu.sesc.studentportal.utils.AuthenticateUtil;;
 public class StudentController {
 
 	private StudentServiceIfc studentServiceIfc;
-	
 
 	StudentController(StudentServiceIfc studentServiceIfc) {
 		this.studentServiceIfc = studentServiceIfc;
 	}
 
 	@PostMapping("/login")
-	public @ResponseBody ResponseEntity loginApi(@RequestBody Student studentLogin) {
-		
-		if(!AuthenticateUtil.isAuthenticate()) {
+	public @ResponseBody ResponseEntity<Student> loginApi(@RequestBody Student studentLogin) {
+
+		if (!AuthenticateUtil.isAuthenticate()) {
 			try {
 				AuthenticateUtil.getHttpServletRequest().login(studentLogin.getUsername(), studentLogin.getPassword());
 			} catch (ServletException e) {
 				throw new AuthenticationException("Invalid username or password");
 			}
 		}
-		
+
 		Student student = new Student();
 		student.setStudentId(AuthenticateUtil.getStudentId());
-		
-		
+
 		student.add(linkTo(methodOn(StudentController.class).getStudent()).withRel("get_profile"));
 		student.add(linkTo(methodOn(StudentController.class).updateStudent(new Student())).withRel("update_profile"));
 		student.add(linkTo(methodOn(EnrollmentController.class).getEnrollments()).withRel("my_enrollments"));
 		student.add(linkTo(methodOn(CourseController.class).getCourses()).withRel("all_courses"));
-		
+
 		return ResponseEntity.status(HttpStatus.OK).body(student);
 	}
 
 	@GetMapping
-	public @ResponseBody ResponseEntity getStudent() {
+	public @ResponseBody ResponseEntity<Student> getStudent() {
 		Student student = studentServiceIfc.getStudentByIdWithoutPassword(AuthenticateUtil.getStudentId());
 		student.add(linkTo(methodOn(StudentController.class).updateStudent(new Student())).withRel("update_profile"));
 		return ResponseEntity.status(HttpStatus.OK).body(student);
 	}
 
 	@PostMapping("/register")
-	public @ResponseBody ResponseEntity registerStudent(@RequestBody Student studentRegister) {
+	public @ResponseBody ResponseEntity<Student> registerStudent(@RequestBody Student studentRegister) {
 		studentServiceIfc.createStudent(studentRegister);
-		
+
 		Student student = new Student();
 		student.add(linkTo(methodOn(StudentController.class).loginApi(new Student())).withRel("login"));
-		
+
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 

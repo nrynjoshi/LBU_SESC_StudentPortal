@@ -28,26 +28,27 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(Include.NON_DEFAULT)
-@Table(name = "enroll", uniqueConstraints = { @UniqueConstraint(name = "uq_StudentAndCourseEnrollment", columnNames = { "student_id", "course_id" }) })
-public class Enroll  extends Common{
+@Table(name = "enroll", uniqueConstraints = {
+		@UniqueConstraint(name = "uq_StudentAndCourseEnrollment", columnNames = { "student_id", "course_id" }) })
+public class Enroll extends Common {
 
 	@JsonProperty("student_id")
-    @Column(name = "student_id", nullable = false)
-    private long studentId;
+	@Column(name = "student_id", nullable = false)
+	private long studentId;
 
 	@JsonProperty("intake")
-    @Column(name = "intake", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private IntakeEnum intake;
-    
+	@Column(name = "intake", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private IntakeEnum intake;
+
 	@JsonProperty("enroll_date")
-    @Column(name = "date", nullable = false)
-    private LocalDateTime date;
+	@Column(name = "date", nullable = false)
+	private LocalDateTime date;
 
 	@JsonProperty("course")
-    @OneToOne
-    @JoinColumn(name="course_id",referencedColumnName="course_id", nullable = false)
-    @ToString.Exclude
-    private Course course = new Course();
+	@OneToOne
+	@JoinColumn(name = "course_id", referencedColumnName = "course_id", nullable = false)
+	@ToString.Exclude
+	private Course course = new Course();
 
 }

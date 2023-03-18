@@ -23,38 +23,41 @@ import com.narayanjoshi.lbu.sesc.studentportal.service.CourseServiceIfc;
 @RequestMapping(value = Endpoint.ROOT_API_V1)
 public class CourseController {
 
-    private CourseServiceIfc  courseServiceIfc;
+	private CourseServiceIfc courseServiceIfc;
 
-    CourseController(CourseServiceIfc  courseServiceIfc){
-        this.courseServiceIfc = courseServiceIfc;
-    }
+	CourseController(CourseServiceIfc courseServiceIfc) {
+		this.courseServiceIfc = courseServiceIfc;
+	}
 
-    @GetMapping(value = Endpoint.VIEW_COURSE_URI)
-    public @ResponseBody ResponseEntity getCourses(){
-       List<Course> courseList = this.courseServiceIfc.findAllCourse();
-       
-       for(Course course: courseList) {
-    	   course.add(linkTo(methodOn(EnrollmentController.class).enrollIntoCourse(course.getCourseId())).withRel("enroll_into_course"));
-       }
-       
-       CollectionModel<Course> collectionModel= CollectionModel.of(courseList);
-       collectionModel.add(linkTo(methodOn(CourseController.class).getCourses()).withSelfRel());
-       collectionModel.add(linkTo(methodOn(CourseController.class).searchCourses("search_keyword")).withRel("search"));
-       return ResponseEntity.status(HttpStatus.OK).body(collectionModel);
-    }
+	@GetMapping(value = Endpoint.VIEW_COURSE_URI)
+	public @ResponseBody ResponseEntity<CollectionModel<Course>> getCourses() {
+		List<Course> courseList = this.courseServiceIfc.findAllCourse();
 
-    @GetMapping(value = Endpoint.SEARCH_COURSE_URI)
-    public @ResponseBody ResponseEntity searchCourses(@RequestParam String title){
-        List<Course> courseList = this.courseServiceIfc.searchCourses(title);
-        
-        for(Course course: courseList) {
-     	   course.add(linkTo(methodOn(EnrollmentController.class).enrollIntoCourse(course.getCourseId())).withRel("enroll_into_course"));
-        }
-        
-        CollectionModel<Course> collectionModel= CollectionModel.of(courseList);
-        collectionModel.add(linkTo(methodOn(CourseController.class).searchCourses(title)).withSelfRel());
-        collectionModel.add(linkTo(methodOn(CourseController.class).getCourses()).withRel(IanaLinkRelations.COLLECTION));
-        return ResponseEntity.status(HttpStatus.OK).body(collectionModel);
-    }
+		for (Course course : courseList) {
+			course.add(linkTo(methodOn(EnrollmentController.class).enrollIntoCourse(course.getCourseId()))
+					.withRel("enroll_into_course"));
+		}
+
+		CollectionModel<Course> collectionModel = CollectionModel.of(courseList);
+		collectionModel.add(linkTo(methodOn(CourseController.class).getCourses()).withSelfRel());
+		collectionModel.add(linkTo(methodOn(CourseController.class).searchCourses("search_keyword")).withRel("search"));
+		return ResponseEntity.status(HttpStatus.OK).body(collectionModel);
+	}
+
+	@GetMapping(value = Endpoint.SEARCH_COURSE_URI)
+	public @ResponseBody ResponseEntity<CollectionModel<Course>> searchCourses(@RequestParam String title) {
+		List<Course> courseList = this.courseServiceIfc.searchCourses(title);
+
+		for (Course course : courseList) {
+			course.add(linkTo(methodOn(EnrollmentController.class).enrollIntoCourse(course.getCourseId()))
+					.withRel("enroll_into_course"));
+		}
+
+		CollectionModel<Course> collectionModel = CollectionModel.of(courseList);
+		collectionModel.add(linkTo(methodOn(CourseController.class).searchCourses(title)).withSelfRel());
+		collectionModel
+				.add(linkTo(methodOn(CourseController.class).getCourses()).withRel(IanaLinkRelations.COLLECTION));
+		return ResponseEntity.status(HttpStatus.OK).body(collectionModel);
+	}
 
 }
