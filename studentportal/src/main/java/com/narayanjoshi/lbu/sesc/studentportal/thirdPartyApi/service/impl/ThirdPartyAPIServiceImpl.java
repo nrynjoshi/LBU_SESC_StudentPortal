@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.narayanjoshi.lbu.sesc.studentportal.constant.KeyConstant;
 import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.constant.PaymentType;
 import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.constant.ThirdPartyEndpoint;
 import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.service.ThirdPartyAPIServiceIfc;
@@ -37,7 +38,7 @@ public class ThirdPartyAPIServiceImpl implements ThirdPartyAPIServiceIfc {
 		createFinanceServiceMap.put("type", paymentType);
 
 		Map<String, Object> accountMap = new HashMap<String, Object>();
-		accountMap.put("studentId", String.valueOf(studentId));
+		accountMap.put(KeyConstant.STUDENTID, String.valueOf(studentId));
 
 		createFinanceServiceMap.put("account", accountMap);
 		httpUtil.post(ThirdPartyEndpoint.CREATE_FINANCE_INVOICE, createFinanceServiceMap);
@@ -46,14 +47,14 @@ public class ThirdPartyAPIServiceImpl implements ThirdPartyAPIServiceIfc {
 	@Override
 	public void createFinanceAccount(long studentId) {
 		Map<String, Object> requestFinanceAccountCreateMap = new HashMap<String, Object>();
-		requestFinanceAccountCreateMap.put("studentId", String.valueOf(studentId));
+		requestFinanceAccountCreateMap.put(KeyConstant.STUDENTID, String.valueOf(studentId));
 		httpUtil.post(ThirdPartyEndpoint.CREATE_FINANCE_ACCOUNT, requestFinanceAccountCreateMap);
 	}
 
 	@Override
 	public void createLibraryAccount(long studentId) {
 		Map<String, Object> requestLibraryAccountCreateMap = new HashMap<String, Object>();
-		requestLibraryAccountCreateMap.put("studentId", String.valueOf(studentId));
+		requestLibraryAccountCreateMap.put(KeyConstant.STUDENTID, String.valueOf(studentId));
 		httpUtil.post(ThirdPartyEndpoint.CREATE_LIBRARY_ACCOUNT, requestLibraryAccountCreateMap);
 	}
 }

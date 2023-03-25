@@ -10,6 +10,8 @@ import com.narayanjoshi.lbu.sesc.studentportal.doa.CourseRepositoryIfc;
 import com.narayanjoshi.lbu.sesc.studentportal.doa.EnrollRepositoryIfc;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Course;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Enroll;
+import com.narayanjoshi.lbu.sesc.studentportal.exception.CourseNotFoundException;
+import com.narayanjoshi.lbu.sesc.studentportal.exception.UserAlreadyEnrollIntoCourseException;
 import com.narayanjoshi.lbu.sesc.studentportal.service.EnrollServiceIfc;
 import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.constant.PaymentType;
 import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.service.ThirdPartyAPIServiceIfc;
@@ -38,22 +40,28 @@ public class EnrollServiceImpl implements EnrollServiceIfc {
 	}
 
 	@Override
-	public void enrolIntoCourse(String courseId) {
+	public void enrolIntoCourse(String courseId) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
 		Course course = courseRepositoryIfc.findByCourseId(courseId);
+		if (course == null) {
+			throw new CourseNotFoundException(courseId);
+		}
+
 		long studentId = AuthenticateUtil.getStudentId();
 
+		// check student is already enroll into course
 		Enroll alreadyEnroll = enrollRepositoryIfc.findByStudentIdAndCourse(studentId, course);
-
-		if (alreadyEnroll == null) {
-			Enroll enroll = new Enroll();
-			enroll.setStudentId(studentId);
-			enroll.setDate(LocalDateTime.now());
-			enroll.setIntake(IntakeEnum.JAN);
-			enroll.setCourse(course);
-			enrollRepositoryIfc.save(enroll);
-
-			thirdPartyAPIServiceIfc.createFinanceServiceInvoice(studentId, course.getFee(), PaymentType.TUITION_FEES);
+		if (alreadyEnroll != null) {
+			throw new UserAlreadyEnrollIntoCourseException(course.getTitle());
 		}
+
+		Enroll enroll = new Enroll();
+		enroll.setStudentId(studentId);
+		enroll.setDate(LocalDateTime.now());
+		enroll.setIntake(IntakeEnum.JAN);
+		enroll.setCourse(course);
+		enrollRepositoryIfc.save(enroll);
+
+		thirdPartyAPIServiceIfc.createFinanceServiceInvoice(studentId, course.getFee(), PaymentType.TUITION_FEES);
 
 	}
 

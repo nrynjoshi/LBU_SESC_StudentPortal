@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.narayanjoshi.lbu.sesc.studentportal.constant.Endpoint;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Student;
 import com.narayanjoshi.lbu.sesc.studentportal.exception.AuthenticationException;
+import com.narayanjoshi.lbu.sesc.studentportal.exception.CourseNotFoundException;
+import com.narayanjoshi.lbu.sesc.studentportal.exception.UserAlreadyEnrollIntoCourseException;
 import com.narayanjoshi.lbu.sesc.studentportal.service.StudentServiceIfc;
 import com.narayanjoshi.lbu.sesc.studentportal.utils.AuthenticateUtil;;
 
@@ -32,7 +34,7 @@ public class StudentController {
 	}
 
 	@PostMapping("/login")
-	public @ResponseBody ResponseEntity<Student> loginApi(@RequestBody Student studentLogin) {
+	public @ResponseBody ResponseEntity<Student> loginApi(@RequestBody Student studentLogin) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
 
 		if (!AuthenticateUtil.isAuthenticate()) {
 			try {
@@ -61,7 +63,7 @@ public class StudentController {
 	}
 
 	@PostMapping("/register")
-	public @ResponseBody ResponseEntity<Student> registerStudent(@RequestBody Student studentRegister) {
+	public @ResponseBody ResponseEntity<Student> registerStudent(@RequestBody Student studentRegister) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
 		studentServiceIfc.createStudent(studentRegister);
 
 		Student student = new Student();

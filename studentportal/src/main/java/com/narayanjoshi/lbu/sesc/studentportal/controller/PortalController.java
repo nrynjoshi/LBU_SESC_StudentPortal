@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.narayanjoshi.lbu.sesc.studentportal.constant.KeyConstant;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Enroll;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Student;
+import com.narayanjoshi.lbu.sesc.studentportal.exception.CourseNotFoundException;
+import com.narayanjoshi.lbu.sesc.studentportal.exception.UserAlreadyEnrollIntoCourseException;
 import com.narayanjoshi.lbu.sesc.studentportal.service.CourseServiceIfc;
 import com.narayanjoshi.lbu.sesc.studentportal.service.EnrollServiceIfc;
 import com.narayanjoshi.lbu.sesc.studentportal.service.StudentServiceIfc;
@@ -100,7 +103,7 @@ public class PortalController {
 	}
 
 	@GetMapping({ "/enrol/{course_id}" })
-	public String enrollIntoCourse(@PathVariable("course_id") String course_id) {
+	public String enrollIntoCourse(@PathVariable(KeyConstant.COURSE_ID) String course_id) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
 		enrollServiceIfc.enrolIntoCourse(course_id);
 		return "redirect:/enrollments";
 	}

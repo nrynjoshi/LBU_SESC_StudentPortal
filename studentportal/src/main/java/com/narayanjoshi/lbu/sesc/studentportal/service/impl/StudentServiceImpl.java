@@ -2,6 +2,9 @@ package com.narayanjoshi.lbu.sesc.studentportal.service.impl;
 
 import java.math.BigDecimal;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,16 +35,16 @@ public class StudentServiceImpl implements StudentServiceIfc {
 	}
 
 	@Override
-	public Student loginStudent(String username, String password) throws AuthenticationException {
+	public Student loginStudent(@NotNull @NotEmpty  String username,@NotNull @NotEmpty String password) throws AuthenticationException {
 		Student dbStudentRecord = studentRepositoryIfc.findByUsername(username);
 		if (dbStudentRecord != null) {
 			if (passwordEncoder.matches(password, dbStudentRecord.getPassword())) {
 				return dbStudentRecord;
 			}
-			throw new AuthenticationException("Credential does not match.");
+			throw new AuthenticationException(username);
 		}
 
-		throw new AuthenticationException("User does not exist. Please register");
+		throw new AuthenticationException();
 	}
 
 	@Override

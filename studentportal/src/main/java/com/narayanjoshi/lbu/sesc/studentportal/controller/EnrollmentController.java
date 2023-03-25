@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.narayanjoshi.lbu.sesc.studentportal.constant.Endpoint;
+import com.narayanjoshi.lbu.sesc.studentportal.constant.KeyConstant;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Enroll;
+import com.narayanjoshi.lbu.sesc.studentportal.exception.CourseNotFoundException;
+import com.narayanjoshi.lbu.sesc.studentportal.exception.UserAlreadyEnrollIntoCourseException;
 import com.narayanjoshi.lbu.sesc.studentportal.service.EnrollServiceIfc;
 
 @RestController
@@ -40,7 +43,7 @@ public class EnrollmentController {
 	}
 
 	@PostMapping
-	public @ResponseBody ResponseEntity enrollIntoCourse(@RequestParam("course_id") String courseId) {
+	public @ResponseBody ResponseEntity enrollIntoCourse(@RequestParam(KeyConstant.COURSE_ID) String courseId) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
 		enrollServiceIfc.enrolIntoCourse(courseId);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}

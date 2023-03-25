@@ -4,3 +4,6 @@
 #docker implementation
 #testing implemenation
 #based on this code base and create two different component
+#commented
+#work on presentation
+#work on componenent two

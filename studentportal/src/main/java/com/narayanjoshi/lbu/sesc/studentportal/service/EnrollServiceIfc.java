@@ -3,6 +3,8 @@ package com.narayanjoshi.lbu.sesc.studentportal.service;
 import java.util.List;
 
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Enroll;
+import com.narayanjoshi.lbu.sesc.studentportal.exception.CourseNotFoundException;
+import com.narayanjoshi.lbu.sesc.studentportal.exception.UserAlreadyEnrollIntoCourseException;
 
 public interface EnrollServiceIfc {
 	/**
@@ -18,7 +20,9 @@ public interface EnrollServiceIfc {
 	 * 
 	 * @param courseId This course Id will be enroll into login user if not already
 	 *                 enroll
+	 * @throws CourseNotFoundException 
+	 * @throws UserAlreadyEnrollIntoCourseException 
 	 */
-	void enrolIntoCourse(String courseId);
+	void enrolIntoCourse(String courseId) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException;
 
 }

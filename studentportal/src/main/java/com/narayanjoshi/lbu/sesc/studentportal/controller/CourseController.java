@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.narayanjoshi.lbu.sesc.studentportal.constant.Endpoint;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Course;
+import com.narayanjoshi.lbu.sesc.studentportal.exception.CourseNotFoundException;
+import com.narayanjoshi.lbu.sesc.studentportal.exception.UserAlreadyEnrollIntoCourseException;
 import com.narayanjoshi.lbu.sesc.studentportal.service.CourseServiceIfc;
 
 @RestController
@@ -30,7 +32,7 @@ public class CourseController {
 	}
 
 	@GetMapping(value = Endpoint.VIEW_COURSE_URI)
-	public @ResponseBody ResponseEntity<CollectionModel<Course>> getCourses() {
+	public @ResponseBody ResponseEntity<CollectionModel<Course>> getCourses() throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
 		List<Course> courseList = this.courseServiceIfc.findAllCourse();
 
 		for (Course course : courseList) {
@@ -40,12 +42,12 @@ public class CourseController {
 
 		CollectionModel<Course> collectionModel = CollectionModel.of(courseList);
 		collectionModel.add(linkTo(methodOn(CourseController.class).getCourses()).withSelfRel());
-		collectionModel.add(linkTo(methodOn(CourseController.class).searchCourses("search_keyword")).withRel("search"));
+		collectionModel.add(linkTo(methodOn(CourseController.class).searchCourses("search_keyword_here")).withRel("search"));
 		return ResponseEntity.status(HttpStatus.OK).body(collectionModel);
 	}
 
 	@GetMapping(value = Endpoint.SEARCH_COURSE_URI)
-	public @ResponseBody ResponseEntity<CollectionModel<Course>> searchCourses(@RequestParam String title) {
+	public @ResponseBody ResponseEntity<CollectionModel<Course>> searchCourses(@RequestParam String title) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
 		List<Course> courseList = this.courseServiceIfc.searchCourses(title);
 
 		for (Course course : courseList) {

@@ -5,5 +5,6 @@ package com.narayanjoshi.lbu.sesc.studentportal.constant;
  */
 public class KeyConstant {
 
-	public static final String STUDENT_ID = "studentId";
+	public static final String STUDENTID = "studentId";
+	public static final String COURSE_ID = "course_id";
 }
