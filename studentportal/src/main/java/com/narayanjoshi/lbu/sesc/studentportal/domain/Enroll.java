@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -28,26 +30,34 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(Include.NON_DEFAULT)
-@Table(name = "enroll", uniqueConstraints = { @UniqueConstraint(name = "uq_StudentAndCourseEnrollment", columnNames = { "student_id", "course_id" }) })
-public class Enroll  extends Common{
+@Table(name = "enroll", uniqueConstraints = {
+		@UniqueConstraint(name = "uq_StudentAndCourseEnrollment", columnNames = { "student_id", "course_id" }) })
+public class Enroll extends Common {
 
 	@JsonProperty("student_id")
-    @Column(name = "student_id", nullable = false)
-    private long studentId;
+	@Column(name = "student_id", nullable = false)
+	@NotNull
+	@NotBlank
+	private long studentId;
 
 	@JsonProperty("intake")
-    @Column(name = "intake", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private IntakeEnum intake;
-    
+	@Column(name = "intake", nullable = false)
+	@Enumerated(EnumType.STRING)
+	@NotNull
+	@NotBlank
+	private IntakeEnum intake;
+
 	@JsonProperty("enroll_date")
-    @Column(name = "date", nullable = false)
-    private LocalDateTime date;
+	@Column(name = "date", nullable = false)
+	@NotNull
+	private LocalDateTime date;
 
 	@JsonProperty("course")
-    @OneToOne
-    @JoinColumn(name="course_id",referencedColumnName="course_id", nullable = false)
-    @ToString.Exclude
-    private Course course = new Course();
+	@OneToOne
+	@JoinColumn(name = "course_id", referencedColumnName = "course_id", nullable = false)
+	@ToString.Exclude
+	@NotNull
+	@NotBlank
+	private Course course = new Course();
 
 }

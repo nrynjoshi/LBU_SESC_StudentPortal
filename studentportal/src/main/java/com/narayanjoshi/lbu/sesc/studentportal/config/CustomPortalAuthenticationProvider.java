@@ -2,7 +2,6 @@ package com.narayanjoshi.lbu.sesc.studentportal.config;
 
 import java.util.ArrayList;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,23 +14,25 @@ import com.narayanjoshi.lbu.sesc.studentportal.service.StudentServiceIfc;
 @Component
 public class CustomPortalAuthenticationProvider implements AuthenticationProvider {
 
-	 @Autowired private StudentServiceIfc studentServiceIfc;
-	
-    @Override
-    public Authentication authenticate(Authentication authentication) 
-      throws AuthenticationException {
- 
-        String username = authentication.getName();
-        String password = authentication.getCredentials().toString();
-        
-        Student loginStudent = studentServiceIfc.loginStudent(username, password);
-    	return new UsernamePasswordAuthenticationToken(
-        		loginStudent, password, new ArrayList<>());
-        
-    }
+	private StudentServiceIfc studentServiceIfc;
 
-    @Override
-    public boolean supports(Class<?> authentication) {
-        return authentication.equals(UsernamePasswordAuthenticationToken.class);
-    }
+	CustomPortalAuthenticationProvider(StudentServiceIfc studentServiceIfc) {
+		this.studentServiceIfc = studentServiceIfc;
+	}
+
+	@Override
+	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+
+		String username = authentication.getName();
+		String password = authentication.getCredentials().toString();
+
+		Student loginStudent = studentServiceIfc.loginStudent(username, password);
+		return new UsernamePasswordAuthenticationToken(loginStudent, password, new ArrayList<>());
+
+	}
+
+	@Override
+	public boolean supports(Class<?> authentication) {
+		return authentication.equals(UsernamePasswordAuthenticationToken.class);
+	}
 }

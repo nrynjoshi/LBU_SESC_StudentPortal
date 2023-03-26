@@ -1,15 +1,15 @@
 package com.narayanjoshi.lbu.sesc.studentportal.constant;
 
 public enum IntakeEnum {
-    JAN("JAN");
+	JAN("JAN");
 
-    String value;
+	String value;
 
-    IntakeEnum(String value) {
-        this.value = value;
-    }
+	IntakeEnum(String value) {
+		this.value = value;
+	}
 
-    public String getValue(){
-        return value;
-    }
+	public String getValue() {
+		return value;
+	}
 }

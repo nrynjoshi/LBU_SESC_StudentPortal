@@ -3,11 +3,14 @@ package com.narayanjoshi.lbu.sesc.studentportal;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * This is the main entry point of application which will be run
+ */
 @SpringBootApplication
-public class ApplicationRunner  {
+public class StudentPortalApplicationRunner {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ApplicationRunner.class, args);
+		SpringApplication.run(StudentPortalApplicationRunner.class, args);
 	}
 
 }
