@@ -7,7 +7,7 @@ package com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.constant;
  */
 public class ThirdPartyEndpoint {
 
-	private static String FINANCE = "http://localhost:8081";
+	private static String FINANCE = "http://localhost:8083/api/v1";
 	private static String LIBRARY = "http://localhost:80";
 
 	public static String CREATE_FINANCE_ACCOUNT = FINANCE + "/accounts";

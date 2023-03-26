@@ -1,6 +1,10 @@
 package com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.service.impl;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,11 +38,18 @@ public class ThirdPartyAPIServiceImpl implements ThirdPartyAPIServiceIfc {
 		Map<String, Object> createFinanceServiceMap = new HashMap<String, Object>();
 
 		createFinanceServiceMap.put("amount", amount);
-		createFinanceServiceMap.put("dueDate", "2022-11-06");
-		createFinanceServiceMap.put("type", paymentType);
+		
+		
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, 1); 
+		Date dueDate = cal.getTime();
+		DateFormat newDate = new SimpleDateFormat("yyyy-MM-dd");
+		String dueDateString = newDate.format(dueDate);
+		createFinanceServiceMap.put("due_date", dueDateString);
+		createFinanceServiceMap.put("payment_type", paymentType);
 
 		Map<String, Object> accountMap = new HashMap<String, Object>();
-		accountMap.put(KeyConstant.STUDENTID, String.valueOf(studentId));
+		accountMap.put("student_id", String.valueOf(studentId));
 
 		createFinanceServiceMap.put("account", accountMap);
 		httpUtil.post(ThirdPartyEndpoint.CREATE_FINANCE_INVOICE, createFinanceServiceMap);
@@ -47,7 +58,7 @@ public class ThirdPartyAPIServiceImpl implements ThirdPartyAPIServiceIfc {
 	@Override
 	public void createFinanceAccount(long studentId) {
 		Map<String, Object> requestFinanceAccountCreateMap = new HashMap<String, Object>();
-		requestFinanceAccountCreateMap.put(KeyConstant.STUDENTID, String.valueOf(studentId));
+		requestFinanceAccountCreateMap.put("student_id", String.valueOf(studentId));
 		httpUtil.post(ThirdPartyEndpoint.CREATE_FINANCE_ACCOUNT, requestFinanceAccountCreateMap);
 	}
 

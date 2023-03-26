@@ -54,15 +54,14 @@ public class Student extends Common {
 	@Column(name = "username", unique = true, nullable = false)
 	@NotNull
 	@NotBlank
-	@Size(min = 4, max = 16, message = "{username.size}")
-	@Pattern(regexp = "[A-Z0-9]*", message = "{username.format}")
+	@Size(min = 4, max = 100, message = "{username.size}")
+	@Pattern(regexp = "[A-Za-z0-9]*", message = "{username.format}")
 	private String username;
 
 	@JsonProperty("password")
 	@Column(name = "password", nullable = false)
 	@NotNull
 	@NotBlank
-	@Size(min = 4, max = 16, message = "{password.size}")
 	private String password;
 
 	@JsonProperty("student_id")

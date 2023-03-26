@@ -31,8 +31,6 @@ public abstract class Common extends RepresentationModel<Common> implements Seri
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	@Column(name = "id")
-	@NotNull
-	@NotBlank
 	private long id;
 
 }
