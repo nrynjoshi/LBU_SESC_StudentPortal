@@ -1,46 +1,51 @@
 package com.narayanjoshi.lbu.sesc.studentportal.domain;
 
-import com.narayanjoshi.lbu.sesc.studentportal.constant.LectureTypeEnum;
+import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.*;
 
 @Getter
 @Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(Include.NON_DEFAULT)
 @Table(name = "course")
-public class Course extends Common{
+public class Course extends Common {
 
-    @Column(name = "name")
-    private String name;
+	@JsonProperty("course_id")
+	@Column(name = "course_id", unique = true, nullable = false)
+	@NotNull
+	@NotBlank
+	private String courseId;
 
-    @Column(name = "description")
-    private String description;
+	@JsonProperty("title")
+	@Column(name = "title", nullable = false)
+	@NotNull
+	@NotBlank
+	private String title;
 
-    @Column(name = "lecture")
-    private String lecture;
+	@JsonProperty("description")
+	@Column(name = "description", length = 1000, nullable = false)
+	@NotNull
+	private String description;
 
-    @Column(name = "lecture_room")
-    private String lectureRoom;
-
-    @Column(name = "lecture_type")
-    @Enumerated(EnumType.STRING)
-    private LectureTypeEnum lectureType;
-
-    @Column(name = "starttime")
-    private String startTime;
-
-    @Column(name = "end_time")
-    private String endTime;
-
-    @Column(name = "course_id")
-    private String courseId;
-
-
+	@JsonProperty("fee")
+	@Column(name = "fee", nullable = false)
+	@NotNull
+	private BigDecimal fee;
 
 }
