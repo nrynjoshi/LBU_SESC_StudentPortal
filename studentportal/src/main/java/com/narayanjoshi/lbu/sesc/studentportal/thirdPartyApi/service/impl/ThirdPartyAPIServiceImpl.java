@@ -65,7 +65,7 @@ public class ThirdPartyAPIServiceImpl implements ThirdPartyAPIServiceIfc {
 	@Override
 	public void createLibraryAccount(long studentId) {
 		Map<String, Object> requestLibraryAccountCreateMap = new HashMap<String, Object>();
-		requestLibraryAccountCreateMap.put(KeyConstant.STUDENTID, String.valueOf(studentId));
+		requestLibraryAccountCreateMap.put("student_id", String.valueOf(studentId));
 		httpUtil.post(ThirdPartyEndpoint.CREATE_LIBRARY_ACCOUNT, requestLibraryAccountCreateMap);
 	}
 }

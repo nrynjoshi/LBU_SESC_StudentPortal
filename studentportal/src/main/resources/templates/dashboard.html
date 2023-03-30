@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,7 +11,7 @@
 	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
 	crossorigin="anonymous">
 
-	<link rel="stylesheet" href="../static/css/main.css">
+<link rel="stylesheet" href="../static/css/main.css">
 </head>
 <body>
 
@@ -21,7 +22,10 @@
 			<div class="row d-flex justify-content-center">
 				<div class="col-md-12">
 					<h2>Dashboard</h2>
-					<p class="card-text">Hello <span sec:authentication="principal.fullname"></span>, welcome to the student portal.</p>
+					<p class="card-text">
+						Hello <span sec:authentication="principal.fullname"></span>,
+						welcome to the student portal.
+					</p>
 				</div>
 			</div>
 		</div>
