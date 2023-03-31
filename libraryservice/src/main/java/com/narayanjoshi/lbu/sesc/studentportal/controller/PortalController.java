@@ -67,16 +67,16 @@ public class PortalController {
 		return "manage-my-books";
 	}
 
-	@GetMapping({ "/books/borrow/{isbn}" })
+	@GetMapping({ "/book/borrow/{isbn}" })
 	public String borrowBook(@PathVariable("isbn") String isbn) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
 		managesBookServiceIfc.borrowBook(isbn);
-		return "redirect:/enrollments";
+		return "redirect:/books";
 	}
 	
-	@GetMapping({ "/books/return/{isbn}" })
+	@GetMapping({ "/book/return/{isbn}" })
 	public String returnBook(@PathVariable("isbn") String isbn) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
 		managesBookServiceIfc.returnBook(isbn);
-		return "redirect:/enrollments";
+		return "redirect:/my-books";
 	}
 
 }

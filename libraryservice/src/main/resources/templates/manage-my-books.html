@@ -33,7 +33,7 @@
 	                <td scope="row" th:text="${book.book.isbn}"></td>
                     <td th:text="${book.book.title}"></td>
                     <td th:text="${book.book.author}"></td>
-                    <td></td>
+                    <td><a class="btn btn-info" th:href="@{/book/return/{isbn}(isbn = ${book.book.isbn})}" role="button">Return</a></td>
                 </tr>
                 </tbody>
             </table>

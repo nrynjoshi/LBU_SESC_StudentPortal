@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.narayanjoshi.lbu.sesc.studentportal.doa.BookRepositoryIfc;
@@ -39,6 +41,7 @@ public class ManagesBookServiceImpl implements ManagesBookServiceIfc {
 		return managesBookRepositoryIfc.findByStudentId(studentId);
 	}
 
+	@Transactional
 	@Override
 	public void borrowBook(String isbn) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
 		Book book = bookRepositoryIfc.findByIsbn(isbn);
@@ -54,16 +57,21 @@ public class ManagesBookServiceImpl implements ManagesBookServiceIfc {
 			throw new UserAlreadyEnrollIntoCourseException(book.getTitle());
 		}
 
-		ManagesBook enroll = new ManagesBook();
-		enroll.setStudentId(studentId);
-		enroll.setDateBorrow(LocalDateTime.now());
-		enroll.setBook(book);
-		managesBookRepositoryIfc.save(enroll);
+		ManagesBook managesBook = new ManagesBook();
+		managesBook.setStudentId(studentId);
+		managesBook.setDateBorrow(LocalDateTime.now());
+		managesBook.setBook(book);
+		managesBookRepositoryIfc.save(managesBook);
 
 		thirdPartyAPIServiceIfc.createFinanceServiceInvoice(studentId, new BigDecimal(10.00), PaymentType.LIBRARY_FEES);
+		
+		int remainingCopies = book.getCopies() - 1;
+		book.setCopies(remainingCopies);
+		bookRepositoryIfc.save(book);
 
 	}
 	
+	@Transactional
 	@Override
 	public void returnBook(String isbn) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
 		Book book = bookRepositoryIfc.findByIsbn(isbn);
@@ -75,12 +83,23 @@ public class ManagesBookServiceImpl implements ManagesBookServiceIfc {
 
 		// check student is already enroll into course
 		ManagesBook alreadyEnroll = managesBookRepositoryIfc.findByStudentIdAndBook(studentId, book);
+		if(alreadyEnroll == null) {
+			//throw error by saying not 
+		}
+		
+		if(alreadyEnroll.getDateReturn() != null) {
+			//book already returned
+		}
 		
 		alreadyEnroll.setDateReturn(LocalDateTime.now());
 		managesBookRepositoryIfc.save(alreadyEnroll);
 
+		//for fine purpose
 		thirdPartyAPIServiceIfc.createFinanceServiceInvoice(studentId, new BigDecimal(10.00), PaymentType.LIBRARY_FEES);
 
+		int remainingCopies = book.getCopies() + 1;
+		book.setCopies(remainingCopies);
+		bookRepositoryIfc.save(book);
 	}
 
 }

@@ -37,7 +37,6 @@ public class ManagesBook extends Common {
 	@JsonProperty("student_id")
 	@Column(name = "student_id", nullable = false)
 	@NotNull
-	@NotBlank
 	private long studentId;
 
 	@JsonProperty("date_borrow")
@@ -47,7 +46,6 @@ public class ManagesBook extends Common {
 	
 	@JsonProperty("date_return")
 	@Column(name = "dateReturn")
-	@NotNull
 	private LocalDateTime dateReturn;
 
 	@JsonProperty("isbn")
@@ -55,7 +53,6 @@ public class ManagesBook extends Common {
 	@JoinColumn(name = "isbn", referencedColumnName = "isbn", nullable = false)
 	@ToString.Exclude
 	@NotNull
-	@NotBlank
 	private Book book = new Book();
 
 }
