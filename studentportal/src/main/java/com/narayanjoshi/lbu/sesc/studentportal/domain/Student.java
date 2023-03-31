@@ -29,7 +29,7 @@ public class Student extends Common {
 
 	@JsonProperty("fullname")
 	@Column(name = "fullname", nullable = false)
-	@NotNull
+	@NotNull(message = "User's name cannot be empty.")
 	@NotBlank
 	private String fullname;
 
@@ -52,8 +52,8 @@ public class Student extends Common {
 
 	@JsonProperty("username")
 	@Column(name = "username", unique = true, nullable = false)
-	@NotNull
-	@NotBlank
+	@NotNull()
+	@NotBlank(message = "User's name cannot be empty.")
 	@Size(min = 4, max = 100, message = "{username.size}")
 	@Pattern(regexp = "[A-Za-z0-9]*", message = "{username.format}")
 	private String username;
