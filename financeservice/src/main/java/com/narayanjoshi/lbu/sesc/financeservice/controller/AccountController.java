@@ -36,13 +36,6 @@ public class AccountController {
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
-	@GetMapping("/accounts/student/{student_id}")
-	public @ResponseBody ResponseEntity<Map> isEligibleForGradution(@PathVariable("student_id") String studentId) {
-		boolean hasOutstandingBalance =  false;//invoiceServiceIfc.hasOutstandingBalance(Long.valueOf(studentId));
-		Map<String, Object> map= new HashMap();
-		map.put("hasOutstandingBalance", hasOutstandingBalance);
-		return ResponseEntity.status(HttpStatus.OK).body(map);
-	}
 
 	// get all accounts
 
