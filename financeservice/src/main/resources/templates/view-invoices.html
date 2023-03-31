@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Student Portal - All Courses</title>
+<title>Finance Portal - All Invoices</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -66,8 +66,8 @@
 						<td th:text="${invoice.dueDate}"></td>
 						<td th:text="${invoice.status}"></td>
 						<td><a class="btn btn-info"
-							th:if="${invoice.status == 'OUTSTANDING'}"
-							th:href="@{/enrol/{referenceId}(referenceId = ${invoice.referenceId})}"
+							
+							th:href="@{invoice/pay/{referenceId}(referenceId = ${invoice.referenceId})}"
 							role="button">Pay</a></td>
 					</tr>
 				</tbody>
