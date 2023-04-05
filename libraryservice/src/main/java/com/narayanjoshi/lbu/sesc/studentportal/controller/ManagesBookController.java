@@ -31,7 +31,7 @@ public class ManagesBookController {
 		this.managesBookServiceImpl = managesBookServiceImpl;
 	}
 
-	@GetMapping()
+	@GetMapping
 	public @ResponseBody ResponseEntity<CollectionModel<ManagesBook>> getEnrollments() {
 
 		List<ManagesBook> enrolCourses = managesBookServiceImpl.getManagesBook();

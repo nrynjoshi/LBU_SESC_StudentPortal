@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,7 +66,13 @@ public class PortalController {
 	}
 
 	@PostMapping({ "/register" })
-	public String registerPortalSubmit(@ModelAttribute Student student, RedirectAttributes redirectAttributes) {
+	public String registerPortalSubmit(@ModelAttribute Student student, BindingResult result, RedirectAttributes redirectAttributes) {
+		
+		if (result.hasErrors()) {
+			redirectAttributes.addFlashAttribute("student", student);
+            return "redirect: /register";
+        }
+		
 		studentServiceIfc.createStudent(student);
 		redirectAttributes.addFlashAttribute("message", "success");
 		return "redirect:/login";

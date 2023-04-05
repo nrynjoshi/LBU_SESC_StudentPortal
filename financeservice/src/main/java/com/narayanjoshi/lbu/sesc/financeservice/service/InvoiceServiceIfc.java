@@ -25,4 +25,8 @@ public interface InvoiceServiceIfc {
 
 	boolean hasOutstandingBalance(long studentId);
 
+	List<Invoice> getAllInvoices();
+
+	void cancelInvoiceByReferenceId(String referenceId);
+
 }

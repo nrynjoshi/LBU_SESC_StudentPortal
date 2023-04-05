@@ -28,6 +28,13 @@ public class InvoiceServiceImpl implements InvoiceServiceIfc {
 	public Invoice getInvoiceByReferenceId(String referenceId) {
 		return invoiceRepositoryIfc.findByReferenceId(referenceId);
 	}
+	
+	@Override
+	public void cancelInvoiceByReferenceId(String referenceId) {
+		Invoice invoiceByReferenceId = getInvoiceByReferenceId(referenceId);
+		invoiceByReferenceId.setStatus(StatusEnum.CANCELLED);
+		invoiceRepositoryIfc.save(invoiceByReferenceId);
+	}
 
 	@Override
 	public void payInvoiceByReferenceId(String referenceId) {
@@ -58,6 +65,12 @@ public class InvoiceServiceImpl implements InvoiceServiceIfc {
 	public List<Invoice> getAllInvoicesByStudentId(long studentId) {
 		Account account = accountRepositoryIfc.findByStudentId(studentId);
 		List<Invoice> invoicesByAccount = getInvoicesByAccount(account);
+		return invoicesByAccount;
+	}
+	
+	@Override
+	public List<Invoice> getAllInvoices() {
+		List<Invoice> invoicesByAccount = invoiceRepositoryIfc.findAll();
 		return invoicesByAccount;
 	}
 	

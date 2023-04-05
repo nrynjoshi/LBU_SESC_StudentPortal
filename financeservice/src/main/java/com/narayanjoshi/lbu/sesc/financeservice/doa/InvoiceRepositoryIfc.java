@@ -12,10 +12,9 @@ import com.narayanjoshi.lbu.sesc.financeservice.domain.Invoice;
 public interface InvoiceRepositoryIfc extends JpaRepository<Invoice, Long> {
 
 	List<Invoice> findAllByAccountId(String accountId);
-	
-	Invoice findByReferenceId(String referenceId);
-	
-	List<Invoice> findByAccount(Account account);
 
+	Invoice findByReferenceId(String referenceId);
+
+	List<Invoice> findByAccount(Account account);
 
 }

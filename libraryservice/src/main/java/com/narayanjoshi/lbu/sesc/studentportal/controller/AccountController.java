@@ -51,9 +51,6 @@ public class AccountController {
 		student.setStudentId(AuthenticateUtil.getStudentId());
 
 		student.add(linkTo(methodOn(AccountController.class).getStudent()).withRel("get_profile"));
-//		student.add(linkTo(methodOn(StudentController.class).updateStudent(new Student())).withRel("update_profile"));
-//		student.add(linkTo(methodOn(EnrollmentController.class).getEnrollments()).withRel("my_enrollments"));
-//		student.add(linkTo(methodOn(CourseController.class).getCourses()).withRel("all_courses"));
 
 		return ResponseEntity.status(HttpStatus.OK).body(student);
 	}
