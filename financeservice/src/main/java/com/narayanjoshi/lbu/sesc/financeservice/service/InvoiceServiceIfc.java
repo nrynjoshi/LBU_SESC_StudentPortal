@@ -2,6 +2,8 @@ package com.narayanjoshi.lbu.sesc.financeservice.service;
 
 import java.util.List;
 
+import org.springframework.ui.Model;
+
 import com.narayanjoshi.lbu.sesc.financeservice.domain.Account;
 import com.narayanjoshi.lbu.sesc.financeservice.domain.Invoice;
 
@@ -28,5 +30,7 @@ public interface InvoiceServiceIfc {
 	List<Invoice> getAllInvoices();
 
 	void cancelInvoiceByReferenceId(String referenceId);
+
+	void payInvoiceThroughPortal(String referenceId, Model model);
 
 }

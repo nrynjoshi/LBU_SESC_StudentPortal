@@ -6,5 +6,5 @@ package com.narayanjoshi.lbu.sesc.financeservice.constant;
 public enum PaymentTypeEnum {
 	TUITION_FEES,
 	LIBRARY_FEES,
-	OTHER_FEES;
+	LIBRARY_FINE;
 }

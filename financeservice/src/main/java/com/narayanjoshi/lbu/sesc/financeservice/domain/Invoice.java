@@ -73,5 +73,7 @@ public class Invoice extends Common {
 	@Enumerated(EnumType.STRING)
 	@NotNull
 	private StatusEnum status;
+	
+	
 
 }

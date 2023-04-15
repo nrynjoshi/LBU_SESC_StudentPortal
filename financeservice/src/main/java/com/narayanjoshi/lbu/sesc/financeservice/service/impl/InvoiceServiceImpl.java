@@ -3,13 +3,13 @@ package com.narayanjoshi.lbu.sesc.financeservice.service.impl;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.narayanjoshi.lbu.sesc.financeservice.constant.StatusEnum;
 import com.narayanjoshi.lbu.sesc.financeservice.doa.AccountRepositoryIfc;
 import com.narayanjoshi.lbu.sesc.financeservice.doa.InvoiceRepositoryIfc;
 import com.narayanjoshi.lbu.sesc.financeservice.domain.Account;
 import com.narayanjoshi.lbu.sesc.financeservice.domain.Invoice;
-import com.narayanjoshi.lbu.sesc.financeservice.service.AccountServiceIfc;
 import com.narayanjoshi.lbu.sesc.financeservice.service.InvoiceServiceIfc;
 import com.narayanjoshi.lbu.sesc.financeservice.utils.Util;
 
@@ -41,6 +41,11 @@ public class InvoiceServiceImpl implements InvoiceServiceIfc {
 		Invoice invoiceByReferenceId = getInvoiceByReferenceId(referenceId);
 		invoiceByReferenceId.setStatus(StatusEnum.PAID);
 		invoiceRepositoryIfc.save(invoiceByReferenceId);
+	}
+	
+	@Override
+	public void payInvoiceThroughPortal(String referenceId, Model model) {
+		payInvoiceByReferenceId(referenceId);
 	}
 
 	@Override

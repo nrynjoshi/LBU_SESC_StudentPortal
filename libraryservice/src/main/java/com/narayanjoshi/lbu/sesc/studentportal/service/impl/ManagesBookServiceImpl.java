@@ -27,6 +27,8 @@ public class ManagesBookServiceImpl implements ManagesBookServiceIfc {
 	private BookRepositoryIfc bookRepositoryIfc;
 
 	private ThirdPartyAPIServiceIfc thirdPartyAPIServiceIfc;
+	
+	private final static int NUMBER_OF_DAYS_BOOK_BORROW = 10;
 
 	ManagesBookServiceImpl(ManagesBookRepositoryIfc managesBookRepositoryIfc, BookRepositoryIfc bookRepositoryIfc,
 			ThirdPartyAPIServiceIfc thirdPartyAPIServiceIfc) {
@@ -63,7 +65,7 @@ public class ManagesBookServiceImpl implements ManagesBookServiceIfc {
 		managesBook.setBook(book);
 		managesBookRepositoryIfc.save(managesBook);
 
-		thirdPartyAPIServiceIfc.createFinanceServiceInvoice(studentId, new BigDecimal(10.00), PaymentType.LIBRARY_FEES);
+		thirdPartyAPIServiceIfc.createFinanceServiceInvoice(studentId, new BigDecimal(1.00), PaymentType.LIBRARY_FEES);
 		
 		int remainingCopies = book.getCopies() - 1;
 		book.setCopies(remainingCopies);
@@ -91,12 +93,18 @@ public class ManagesBookServiceImpl implements ManagesBookServiceIfc {
 			//book already returned
 		}
 		
-		alreadyEnroll.setDateReturn(LocalDateTime.now());
+		LocalDateTime todayDate = LocalDateTime.now();
+		alreadyEnroll.setDateReturn(todayDate);
 		managesBookRepositoryIfc.save(alreadyEnroll);
 
 		//for fine purpose
-		thirdPartyAPIServiceIfc.createFinanceServiceInvoice(studentId, new BigDecimal(10.00), PaymentType.LIBRARY_FEES);
-
+		LocalDateTime dateBorrow = alreadyEnroll.getDateBorrow();
+		
+		// if return date - NUMBER_OF_DAYS_BOOK_BORROW > dateBorrow then books does not return in time
+		if(todayDate.minusDays(NUMBER_OF_DAYS_BOOK_BORROW).isAfter(dateBorrow)) {
+			thirdPartyAPIServiceIfc.createFinanceServiceInvoice(studentId, new BigDecimal(3.00), PaymentType.LIBRARY_FINE);
+		}
+		
 		int remainingCopies = book.getCopies() + 1;
 		book.setCopies(remainingCopies);
 		bookRepositoryIfc.save(book);
