@@ -1,6 +1,8 @@
 package com.narayanjoshi.lbu.sesc.financeservice.domain;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -73,6 +75,13 @@ public class Invoice extends Common {
 	@Enumerated(EnumType.STRING)
 	@NotNull
 	private StatusEnum status;
+	
+	public Invoice(BigDecimal amount, LocalDate dueDate, PaymentTypeEnum paymentType, Account account) {
+		this.amount = amount;
+		this.dueDate = Date.from(dueDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		this.paymentType = paymentType;
+		this.account = account;
+	}
 	
 	
 
