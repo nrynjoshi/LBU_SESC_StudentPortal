@@ -1,2 +1,4 @@
-package com.narayanjoshi.lbu.sesc.studentportal.unittest.service;public class CourseServiceTest {
+package com.narayanjoshi.lbu.sesc.studentportal.unittest.service;
+
+public class CourseServiceTest {
 }

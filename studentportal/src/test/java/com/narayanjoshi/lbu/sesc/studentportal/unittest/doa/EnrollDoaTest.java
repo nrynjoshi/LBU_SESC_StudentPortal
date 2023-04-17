@@ -1,4 +1,4 @@
-package com.narayanjoshi.lbu.sesc.studentportal.unittest.service;
+package com.narayanjoshi.lbu.sesc.studentportal.unittest.doa;
 
-public class EnrollServiceTest {
+public class EnrollDoaTest {
 }
