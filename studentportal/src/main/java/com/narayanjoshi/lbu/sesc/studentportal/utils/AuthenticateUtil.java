@@ -2,6 +2,7 @@ package com.narayanjoshi.lbu.sesc.studentportal.utils;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.narayanjoshi.lbu.sesc.studentportal.exception.AuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -19,6 +20,9 @@ public class AuthenticateUtil {
 	}
 
 	public static long getStudentId() {
+		if(!isAuthenticate()){
+			throw new AuthenticationException(0l);
+		}
 		return getPrincipal().getStudentId();
 	}
 

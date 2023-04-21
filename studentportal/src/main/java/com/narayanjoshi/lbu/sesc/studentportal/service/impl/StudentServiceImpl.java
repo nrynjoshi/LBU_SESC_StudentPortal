@@ -2,6 +2,7 @@ package com.narayanjoshi.lbu.sesc.studentportal.service.impl;
 
 import java.math.BigDecimal;
 
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -48,6 +49,7 @@ public class StudentServiceImpl implements StudentServiceIfc {
 	}
 
 	@Override
+	@Transactional
 	public void createStudent(Student student) {
 		long studentId = Util.generateStudentId();
 		student.setStudentId(studentId);

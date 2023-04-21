@@ -37,14 +37,12 @@ public class Enroll extends Common {
 	@JsonProperty("student_id")
 	@Column(name = "student_id", nullable = false)
 	@NotNull
-	@NotBlank
 	private long studentId;
 
 	@JsonProperty("intake")
 	@Column(name = "intake", nullable = false)
 	@Enumerated(EnumType.STRING)
 	@NotNull
-	@NotBlank
 	private IntakeEnum intake;
 
 	@JsonProperty("enroll_date")
@@ -57,7 +55,6 @@ public class Enroll extends Common {
 	@JoinColumn(name = "course_id", referencedColumnName = "course_id", nullable = false)
 	@ToString.Exclude
 	@NotNull
-	@NotBlank
 	private Course course = new Course();
 
 }

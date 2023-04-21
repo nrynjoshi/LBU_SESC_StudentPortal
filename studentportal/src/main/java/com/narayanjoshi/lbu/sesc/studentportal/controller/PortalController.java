@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,7 +66,13 @@ public class PortalController {
 	}
 
 	@PostMapping({ "/register" })
-	public String registerPortalSubmit(@ModelAttribute Student student, RedirectAttributes redirectAttributes) {
+	public String registerPortalSubmit(@ModelAttribute Student student, BindingResult result, RedirectAttributes redirectAttributes) {
+		
+		if (result.hasErrors()) {
+			redirectAttributes.addFlashAttribute("student", student);
+            return "redirect: /register";
+        }
+		
 		studentServiceIfc.createStudent(student);
 		redirectAttributes.addFlashAttribute("message", "success");
 		return "redirect:/login";
@@ -81,7 +88,14 @@ public class PortalController {
 	public String profilePortalPage(Model model) {
 		long studentId = AuthenticateUtil.getStudentId();
 		model.addAttribute("student", studentServiceIfc.getStudentByIdWithoutPassword(Long.valueOf(studentId)));
-		return "/view_and_update-student-profile";
+		return "/view-profile";
+	}
+	
+	@GetMapping({ "/profile/update" })
+	public String profileUpdatePortalPage(Model model) {
+		long studentId = AuthenticateUtil.getStudentId();
+		model.addAttribute("student", studentServiceIfc.getStudentByIdWithoutPassword(Long.valueOf(studentId)));
+		return "/update-profile";
 	}
 
 	@PostMapping({ "/profile" })
@@ -103,8 +117,9 @@ public class PortalController {
 	}
 
 	@GetMapping({ "/enrol/{course_id}" })
-	public String enrollIntoCourse(@PathVariable(KeyConstant.COURSE_ID) String course_id) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
+	public String enrollIntoCourse(@PathVariable(KeyConstant.COURSE_ID) String course_id, RedirectAttributes redirectAttributes) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
 		enrollServiceIfc.enrolIntoCourse(course_id);
+		redirectAttributes.addFlashAttribute("success_msg", "You have successfully enrol into this course "+course_id);
 		return "redirect:/enrollments";
 	}
 
