@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.narayanjoshi.lbu.sesc.studentportal.constant.Endpoint;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.ManagesBook;
 import com.narayanjoshi.lbu.sesc.studentportal.exception.CourseNotFoundException;
-import com.narayanjoshi.lbu.sesc.studentportal.exception.UserAlreadyEnrollIntoCourseException;
 import com.narayanjoshi.lbu.sesc.studentportal.service.impl.ManagesBookServiceImpl;
 
 @RestController
@@ -42,7 +41,7 @@ public class ManagesBookController {
 	}
 
 	@PostMapping
-	public @ResponseBody ResponseEntity enrollIntoCourse(@RequestParam("isbn") String isbn) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
+	public @ResponseBody ResponseEntity enrollIntoCourse(@RequestParam("isbn") String isbn) throws CourseNotFoundException {
 		managesBookServiceImpl.borrowBook(isbn);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}

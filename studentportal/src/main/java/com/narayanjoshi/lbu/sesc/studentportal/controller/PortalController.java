@@ -117,8 +117,9 @@ public class PortalController {
 	}
 
 	@GetMapping({ "/enrol/{course_id}" })
-	public String enrollIntoCourse(@PathVariable(KeyConstant.COURSE_ID) String course_id) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
+	public String enrollIntoCourse(@PathVariable(KeyConstant.COURSE_ID) String course_id, RedirectAttributes redirectAttributes) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
 		enrollServiceIfc.enrolIntoCourse(course_id);
+		redirectAttributes.addFlashAttribute("success_msg", "You have successfully enrol into this course "+course_id);
 		return "redirect:/enrollments";
 	}
 

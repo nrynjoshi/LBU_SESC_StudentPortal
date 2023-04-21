@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.narayanjoshi.lbu.sesc.studentportal.constant.Endpoint;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Book;
 import com.narayanjoshi.lbu.sesc.studentportal.exception.CourseNotFoundException;
-import com.narayanjoshi.lbu.sesc.studentportal.exception.UserAlreadyEnrollIntoCourseException;
 import com.narayanjoshi.lbu.sesc.studentportal.service.BookServiceIfc;
 
 @RestController
@@ -32,7 +31,7 @@ public class BookController {
 	}
 
 	@GetMapping(value = Endpoint.VIEW_BOOK_URI)
-	public @ResponseBody ResponseEntity<CollectionModel<Book>> getBooks() throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
+	public @ResponseBody ResponseEntity<CollectionModel<Book>> getBooks() throws CourseNotFoundException {
 		List<Book> courseList = this.bookServiceIfc.findAllBook();
 
 		for (Book course : courseList) {
@@ -47,7 +46,7 @@ public class BookController {
 	}
 
 	@GetMapping(value = Endpoint.SEARCH_BOOK_URI)
-	public @ResponseBody ResponseEntity<CollectionModel<Book>> searchBooks(@RequestParam String title) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
+	public @ResponseBody ResponseEntity<CollectionModel<Book>> searchBooks(@RequestParam String title) throws CourseNotFoundException {
 		List<Book> courseList = this.bookServiceIfc.searchBooks(title);
 
 		for (Book course : courseList) {

@@ -22,7 +22,6 @@ import com.narayanjoshi.lbu.sesc.studentportal.constant.Endpoint;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Account;
 import com.narayanjoshi.lbu.sesc.studentportal.exception.AuthenticationException;
 import com.narayanjoshi.lbu.sesc.studentportal.exception.CourseNotFoundException;
-import com.narayanjoshi.lbu.sesc.studentportal.exception.UserAlreadyEnrollIntoCourseException;
 import com.narayanjoshi.lbu.sesc.studentportal.service.AccountServiceIfc;
 import com.narayanjoshi.lbu.sesc.studentportal.utils.AuthenticateUtil;;
 
@@ -37,7 +36,7 @@ public class AccountController {
 	}
 	
 	@PostMapping("/login")
-	public @ResponseBody ResponseEntity<Account> loginApi(@RequestBody Account studentLogin) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
+	public @ResponseBody ResponseEntity<Account> loginApi(@RequestBody Account studentLogin) {
 
 		if (!AuthenticateUtil.isAuthenticate()) {
 			try {

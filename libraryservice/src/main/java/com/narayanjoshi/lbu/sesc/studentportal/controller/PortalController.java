@@ -2,6 +2,9 @@ package com.narayanjoshi.lbu.sesc.studentportal.controller;
 
 import java.util.List;
 
+import com.narayanjoshi.lbu.sesc.studentportal.exception.AlreadyBorrowedThisBookException;
+import com.narayanjoshi.lbu.sesc.studentportal.exception.BookAlreadyReturnException;
+import com.narayanjoshi.lbu.sesc.studentportal.exception.BookHasNotBorrowedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Account;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.ManagesBook;
 import com.narayanjoshi.lbu.sesc.studentportal.exception.CourseNotFoundException;
-import com.narayanjoshi.lbu.sesc.studentportal.exception.UserAlreadyEnrollIntoCourseException;
 import com.narayanjoshi.lbu.sesc.studentportal.service.BookServiceIfc;
 import com.narayanjoshi.lbu.sesc.studentportal.service.ManagesBookServiceIfc;
 import com.narayanjoshi.lbu.sesc.studentportal.utils.AuthenticateUtil;
@@ -68,13 +70,13 @@ public class PortalController {
 	}
 
 	@GetMapping({ "/book/borrow/{isbn}" })
-	public String borrowBook(@PathVariable("isbn") String isbn) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
+	public String borrowBook(@PathVariable("isbn") String isbn) throws CourseNotFoundException, AlreadyBorrowedThisBookException {
 		managesBookServiceIfc.borrowBook(isbn);
 		return "redirect:/books";
 	}
 	
 	@GetMapping({ "/book/return/{isbn}" })
-	public String returnBook(@PathVariable("isbn") String isbn) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
+	public String returnBook(@PathVariable("isbn") String isbn) throws CourseNotFoundException, BookHasNotBorrowedException, BookAlreadyReturnException {
 		managesBookServiceIfc.returnBook(isbn);
 		return "redirect:/my-books";
 	}

@@ -6,6 +6,9 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.narayanjoshi.lbu.sesc.studentportal.exception.AlreadyBorrowedThisBookException;
+import com.narayanjoshi.lbu.sesc.studentportal.exception.BookAlreadyReturnException;
+import com.narayanjoshi.lbu.sesc.studentportal.exception.BookHasNotBorrowedException;
 import org.springframework.stereotype.Service;
 
 import com.narayanjoshi.lbu.sesc.studentportal.doa.BookRepositoryIfc;
@@ -13,7 +16,6 @@ import com.narayanjoshi.lbu.sesc.studentportal.doa.ManagesBookRepositoryIfc;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.Book;
 import com.narayanjoshi.lbu.sesc.studentportal.domain.ManagesBook;
 import com.narayanjoshi.lbu.sesc.studentportal.exception.CourseNotFoundException;
-import com.narayanjoshi.lbu.sesc.studentportal.exception.UserAlreadyEnrollIntoCourseException;
 import com.narayanjoshi.lbu.sesc.studentportal.service.ManagesBookServiceIfc;
 import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.constant.PaymentType;
 import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.service.ThirdPartyAPIServiceIfc;
@@ -45,7 +47,7 @@ public class ManagesBookServiceImpl implements ManagesBookServiceIfc {
 
 	@Transactional
 	@Override
-	public void borrowBook(String isbn) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
+	public void borrowBook(String isbn) throws CourseNotFoundException, AlreadyBorrowedThisBookException {
 		Book book = bookRepositoryIfc.findByIsbn(isbn);
 		if (book == null) {
 			throw new CourseNotFoundException(isbn);
@@ -56,7 +58,7 @@ public class ManagesBookServiceImpl implements ManagesBookServiceIfc {
 		// check student is already enroll into course
 		ManagesBook alreadyEnroll = managesBookRepositoryIfc.findByStudentIdAndBook(studentId, book);
 		if (alreadyEnroll != null) {
-			throw new UserAlreadyEnrollIntoCourseException(book.getTitle());
+			throw new AlreadyBorrowedThisBookException(book.getTitle());
 		}
 
 		ManagesBook managesBook = new ManagesBook();
@@ -75,7 +77,7 @@ public class ManagesBookServiceImpl implements ManagesBookServiceIfc {
 	
 	@Transactional
 	@Override
-	public void returnBook(String isbn) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
+	public void returnBook(String isbn) throws CourseNotFoundException, BookHasNotBorrowedException, BookAlreadyReturnException {
 		Book book = bookRepositoryIfc.findByIsbn(isbn);
 		if (book == null) {
 			throw new CourseNotFoundException(isbn);
@@ -86,11 +88,12 @@ public class ManagesBookServiceImpl implements ManagesBookServiceIfc {
 		// check student is already enroll into course
 		ManagesBook alreadyEnroll = managesBookRepositoryIfc.findByStudentIdAndBook(studentId, book);
 		if(alreadyEnroll == null) {
-			//throw error by saying not 
+			throw new BookHasNotBorrowedException(book.getTitle());
+
 		}
 		
 		if(alreadyEnroll.getDateReturn() != null) {
-			//book already returned
+			throw new BookAlreadyReturnException(book.getTitle());
 		}
 		
 		LocalDateTime todayDate = LocalDateTime.now();
