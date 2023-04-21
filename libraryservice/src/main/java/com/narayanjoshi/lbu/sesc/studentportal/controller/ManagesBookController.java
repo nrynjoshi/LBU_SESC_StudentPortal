@@ -5,6 +5,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.List;
 
+import com.narayanjoshi.lbu.sesc.studentportal.exception.AlreadyBorrowedThisBookException;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +42,7 @@ public class ManagesBookController {
 	}
 
 	@PostMapping
-	public @ResponseBody ResponseEntity enrollIntoCourse(@RequestParam("isbn") String isbn) throws CourseNotFoundException {
+	public @ResponseBody ResponseEntity enrollIntoCourse(@RequestParam("isbn") String isbn) throws CourseNotFoundException, AlreadyBorrowedThisBookException {
 		managesBookServiceImpl.borrowBook(isbn);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
