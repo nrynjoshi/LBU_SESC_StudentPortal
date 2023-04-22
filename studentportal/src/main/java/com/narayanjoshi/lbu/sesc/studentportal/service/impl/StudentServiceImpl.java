@@ -56,10 +56,6 @@ public class StudentServiceImpl implements StudentServiceIfc {
 		student.setPassword(passwordEncoder.encode(student.getPassword()));
 		studentRepositoryIfc.save(student);
 
-		thirdPartyAPIServiceIfc.createFinanceAccount(studentId);
-		thirdPartyAPIServiceIfc.createLibraryAccount(studentId);
-		thirdPartyAPIServiceIfc.createFinanceServiceInvoice(studentId, new BigDecimal(1500.00),
-				PaymentType.TUITION_FEES);
 	}
 
 	@Override
