@@ -66,7 +66,7 @@ public class InvoiceController {
 	}
 	
 	@PutMapping(Endpoint.GET_INVOICES_BY_REFERENCE)
-	public @ResponseBody ResponseEntity payInvoiceAccountByRefId(@PathVariable String reference) {
+	public @ResponseBody ResponseEntity payInvoiceAccountByRefId(@PathVariable String reference) throws Exception {
 		invoiceServiceIfc.payInvoiceByReferenceId(reference);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
