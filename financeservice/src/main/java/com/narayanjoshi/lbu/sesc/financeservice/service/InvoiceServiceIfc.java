@@ -17,7 +17,7 @@ public interface InvoiceServiceIfc {
 	 */
 	Invoice getInvoiceByReferenceId(String referenceId);
 
-	void payInvoiceByReferenceId(String referenceId);
+	void payInvoiceByReferenceId(String referenceId) throws Exception;
 
 	String createInvoice(Invoice invoice);
 	
@@ -31,6 +31,6 @@ public interface InvoiceServiceIfc {
 
 	void cancelInvoiceByReferenceId(String referenceId);
 
-	void payInvoiceThroughPortal(String referenceId, Model model);
+	void payInvoiceThroughPortal(String referenceId, Model model) throws Exception;
 
 }

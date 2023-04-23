@@ -37,14 +37,17 @@ public class InvoiceServiceImpl implements InvoiceServiceIfc {
 	}
 
 	@Override
-	public void payInvoiceByReferenceId(String referenceId) {
+	public void payInvoiceByReferenceId(String referenceId) throws Exception {
 		Invoice invoiceByReferenceId = getInvoiceByReferenceId(referenceId);
+		if(invoiceByReferenceId.getStatus() == StatusEnum.PAID){
+			throw new Exception("Already paid for reference "+referenceId);
+		}
 		invoiceByReferenceId.setStatus(StatusEnum.PAID);
 		invoiceRepositoryIfc.save(invoiceByReferenceId);
 	}
 	
 	@Override
-	public void payInvoiceThroughPortal(String referenceId, Model model) {
+	public void payInvoiceThroughPortal(String referenceId, Model model) throws Exception {
 		payInvoiceByReferenceId(referenceId);
 	}
 
