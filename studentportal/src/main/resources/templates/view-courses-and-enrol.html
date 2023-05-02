@@ -20,6 +20,11 @@
 
 			<div class="col-md-12">
 				<h2>Courses</h2>
+				<div th:if="${success_msg != null}" class="alert alert-success" role="alert" th:text="${success_msg}">
+				</div>
+				<div th:if="${error_msg != null}" class="alert alert-danger" role="alert" th:text="${error_msg}">
+				</div>
+
 				<table class="table table-striped table-hover">
 					<thead>
 						<tr>

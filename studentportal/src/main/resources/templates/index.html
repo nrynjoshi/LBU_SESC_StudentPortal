@@ -33,14 +33,19 @@
 										<p class="text-center small">Enter your username &
 											password to login</p>
 									</div>
-									
+
 									<div th:if="${param.error != null}" class="alert alert-danger" role="alert">
-										Invalid Credential
+										Invalid Login Credential
 									</div>
-									
+
 									<div th:if="${param.logout != null}" class="alert alert-success" role="alert">
 										User Logout Successfully.
 									</div>
+
+									<div th:if="${param.registered != null}" class="alert alert-success" role="alert">
+										User has successfully registered. Please login
+									</div>
+
 
 									<form class="row g-3 needs-validation" action="#"
 										th:action="@{/login}" th:object="${student}" method="post"

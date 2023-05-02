@@ -19,16 +19,19 @@
 			<div class="row d-flex justify-content-center">
 				<div class="col-md-12">
 					<h2>Graduation</h2>
-					<div class="alert alert-info" role="alert">
+					<div class="alert alert-danger" role="alert" th:if="${is_eligible_graduated == false}">
 						You need to pay any outstanding and library fees before you are
 						eligible to graduate.
-
-						<div class="font-italic">
-							Your current status is: <span
-								th:if="${is_eligible_graduated == false}"
-								class="font-weight-bold">in</span>eligible to graduate.
+						Your current status is: ineligible to graduate.
 						</div>
 
+					<div class="alert alert-success" role="alert" th:if="${is_eligible_graduated == true}">
+						Wel done! You have paid all your outstanding fees to
+						eligible to graduate.
+						Your current status is: eligible to graduate.
+
+						<span> Have a nice future ahead.</span>
+					</div>
 
 					</div>
 				</div>

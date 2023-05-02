@@ -20,6 +20,10 @@
 			<div class="col-md-10">
 
 				<h2>Student Profile Update</h2>
+				<div th:if="${param.success_msg != null}" class="alert alert-success" role="alert" th:text="${param.success_msg}">
+				</div>
+				<div th:if="${param.error_msg != null}" class="alert alert-danger" role="alert" th:text="${param.error_msg}">
+				</div>
 				<div>
 					<form class="needs-validation" action="#" th:action="@{/profile}"
 						th:object="${student}" method="post" novalidate>
