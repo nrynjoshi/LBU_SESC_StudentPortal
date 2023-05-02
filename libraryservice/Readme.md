@@ -10,6 +10,9 @@ This is a simple microservices-based application which exposes a RESTful API and
 4. Return - return a book using isbn code.
 5. Account - display the user's borrowng history.
 
+## Login
+please user your student Id as display in your profile and default password i.e pass123
+
 ## Integrations
 ### 1. Database
 The application integrates with a MYSQL database.</br>
