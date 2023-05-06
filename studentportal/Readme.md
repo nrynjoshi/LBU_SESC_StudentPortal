@@ -1,5 +1,5 @@
 # Student Portal Application
-This is a simple microservices-based application which exposes a RESTful API. It is written in Java using the Spring Boot framework. It is intended for use as part of the SESC module at Leeds Beckett University.
+This is a simple microservices-based application which exposes a RESTful API and has Web Portal. It is written in Java using the Spring Boot framework. It is intended for use as part of the SESC module at Leeds Beckett University.
 
 ![component diagram](src/main/resources/static/student-portal.png "Component Diagram")
 

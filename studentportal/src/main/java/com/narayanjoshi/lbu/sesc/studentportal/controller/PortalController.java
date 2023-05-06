@@ -67,15 +67,10 @@ public class PortalController {
 
 	@PostMapping({ "/register" })
 	public String registerPortalSubmit(@ModelAttribute Student student, BindingResult result, RedirectAttributes redirectAttributes) {
-		
-		if (result.hasErrors()) {
-			redirectAttributes.addFlashAttribute("student", student);
-            return "redirect: /register";
-        }
-		
+
 		studentServiceIfc.createStudent(student);
 		redirectAttributes.addFlashAttribute("message", "success");
-		return "redirect:/login";
+		return "redirect:/login?registered=true";
 	}
 
 	@GetMapping({ "/courses" })
@@ -100,9 +95,8 @@ public class PortalController {
 
 	@PostMapping({ "/profile" })
 	public String profilePortalSubmit(@ModelAttribute Student student, RedirectAttributes redirectAttributes) {
-
 		studentServiceIfc.updateStudent(student);
-		return "redirect:/profile";
+		return "redirect:/profile?success=true";
 	}
 
 	@GetMapping({ "/graduation" })
@@ -113,14 +107,14 @@ public class PortalController {
 
 	@GetMapping({ "/logout" })
 	public String logout(Model model) {
-		return "redirect:/login";
+		return "redirect:/login?logout=true";
 	}
 
 	@GetMapping({ "/enrol/{course_id}" })
 	public String enrollIntoCourse(@PathVariable(KeyConstant.COURSE_ID) String course_id, RedirectAttributes redirectAttributes) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
 		enrollServiceIfc.enrolIntoCourse(course_id);
 		redirectAttributes.addFlashAttribute("success_msg", "You have successfully enrol into this course "+course_id);
-		return "redirect:/enrollments";
+		return "redirect:/courses";
 	}
 
 	@GetMapping({ "/enrollments" })

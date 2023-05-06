@@ -57,7 +57,7 @@ public class ManagesBookServiceImpl implements ManagesBookServiceIfc {
 
 		// check student is already enroll into course
 		ManagesBook alreadyEnroll = managesBookRepositoryIfc.findByStudentIdAndBook(studentId, book);
-		if (alreadyEnroll != null) {
+		if (alreadyEnroll != null && alreadyEnroll.getDateReturn() == null) {
 			throw new AlreadyBorrowedThisBookException(book.getTitle());
 		}
 

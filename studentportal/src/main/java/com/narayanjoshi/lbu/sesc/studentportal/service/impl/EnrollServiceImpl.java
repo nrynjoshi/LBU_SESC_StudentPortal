@@ -17,6 +17,8 @@ import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.constant.PaymentTyp
 import com.narayanjoshi.lbu.sesc.studentportal.thirdPartyApi.service.ThirdPartyAPIServiceIfc;
 import com.narayanjoshi.lbu.sesc.studentportal.utils.AuthenticateUtil;
 
+import javax.transaction.Transactional;
+
 @Service
 public class EnrollServiceImpl implements EnrollServiceIfc {
 
@@ -40,6 +42,7 @@ public class EnrollServiceImpl implements EnrollServiceIfc {
 	}
 
 	@Override
+	@Transactional
 	public void enrolIntoCourse(String courseId) throws CourseNotFoundException, UserAlreadyEnrollIntoCourseException {
 		Course course = courseRepositoryIfc.findByCourseId(courseId);
 		if (course == null) {
@@ -50,6 +53,7 @@ public class EnrollServiceImpl implements EnrollServiceIfc {
 
 		// check student is already enroll into course
 		Enroll alreadyEnroll = enrollRepositoryIfc.findByStudentIdAndCourse(studentId, course);
+		List<Enroll> enrollListBeforeSaving = enrollRepositoryIfc.findByStudentId(studentId);
 		if (alreadyEnroll != null) {
 			throw new UserAlreadyEnrollIntoCourseException(course.getTitle());
 		}
@@ -60,6 +64,12 @@ public class EnrollServiceImpl implements EnrollServiceIfc {
 		enroll.setIntake(IntakeEnum.JAN);
 		enroll.setCourse(course);
 		enrollRepositoryIfc.save(enroll);
+
+		//If this is your first enrolment, a student account is created at this point.
+		if(enrollListBeforeSaving.isEmpty()){
+			thirdPartyAPIServiceIfc.createFinanceAccount(studentId);
+			thirdPartyAPIServiceIfc.createLibraryAccount(studentId);
+		}
 
 		thirdPartyAPIServiceIfc.createFinanceServiceInvoice(studentId, course.getFee(), PaymentType.TUITION_FEES);
 

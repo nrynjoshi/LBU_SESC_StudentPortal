@@ -68,7 +68,7 @@ public class GlobalExceptionHandler {
 	public RedirectView  throwable(UserAlreadyEnrollIntoCourseException exception, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes)
 			throws IOException {
 		exception.printStackTrace();
-		RedirectView rw = new RedirectView("/enrollments");
+		RedirectView rw = new RedirectView("/courses");
 		FlashMap outputFlashMap = RequestContextUtils.getOutputFlashMap(request);
 		if (outputFlashMap != null){
 			outputFlashMap.put("error_msg", exception.getMessage());

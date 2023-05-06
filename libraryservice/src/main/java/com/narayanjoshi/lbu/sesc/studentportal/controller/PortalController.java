@@ -72,7 +72,7 @@ public class PortalController {
 	@GetMapping({ "/book/borrow/{isbn}" })
 	public String borrowBook(@PathVariable("isbn") String isbn) throws CourseNotFoundException, AlreadyBorrowedThisBookException {
 		managesBookServiceIfc.borrowBook(isbn);
-		return "redirect:/books";
+		return "redirect:/my-books";
 	}
 	
 	@GetMapping({ "/book/return/{isbn}" })

@@ -53,7 +53,7 @@ public class PortalController {
 
 
 	@GetMapping({ "/invoice/pay/{reference_id}" })
-	public String payForInvoice(@PathVariable("reference_id") String referenceId) {
+	public String payForInvoice(@PathVariable("reference_id") String referenceId) throws Exception {
 		invoiceServiceIfc.payInvoiceByReferenceId(referenceId);
 		return "redirect:/invoices?reference_id="+referenceId;
 	}

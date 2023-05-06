@@ -22,6 +22,9 @@
 
 
 				<h2>Student Profile</h2>
+				<div th:if="${param.success != null}" class="alert alert-success" role="alert">
+					Your profile has been updated successfully.
+				</div>
 				<div>
 					<table>
 						<tr>

@@ -31,7 +31,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @JsonInclude(Include.NON_DEFAULT)
 @Table(name = "manges_book", uniqueConstraints = {
-		@UniqueConstraint(name = "uq_StudentAndBookManage", columnNames = { "student_id", "isbn" }) })
+		@UniqueConstraint(name = "uq_StudentAndBookManage", columnNames = { "student_id", "isbn", "dateReturn" }) })
 public class ManagesBook extends Common {
 
 	@JsonProperty("student_id")
