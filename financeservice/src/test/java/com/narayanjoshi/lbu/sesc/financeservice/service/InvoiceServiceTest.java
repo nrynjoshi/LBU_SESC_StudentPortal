@@ -145,7 +145,7 @@ class InvoiceServiceTest {
     }
 
     @Test
-    void testPayInvoice_withValidId_paysInvoice() {
+    void testPayInvoice_withValidId_paysInvoice() throws Exception {
         invoice.setStatus(StatusEnum.OUTSTANDING);
         invoiceService.payInvoiceByReferenceId(invoiceReference);
         invoice.setStatus(StatusEnum.PAID);
@@ -156,7 +156,7 @@ class InvoiceServiceTest {
     }
 
     @Test
-    void testProcessPayment_withStatusOutstanding_updatesInvoice() {
+    void testProcessPayment_withStatusOutstanding_updatesInvoice() throws Exception {
         invoice.setStatus(StatusEnum.OUTSTANDING);
         invoiceService.payInvoiceByReferenceId(invoiceReference);
         
@@ -186,7 +186,7 @@ class InvoiceServiceTest {
     }
 
     @Test
-    void testPayInvoiceThroughPortal_withCorrectReference_paysInvoice() {
+    void testPayInvoiceThroughPortal_withCorrectReference_paysInvoice() throws Exception {
         invoice.setStatus(StatusEnum.OUTSTANDING);
         invoiceService.payInvoiceThroughPortal(invoice.getReferenceId(), model);
         
